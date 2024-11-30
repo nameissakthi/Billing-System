@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import backendUrl from "../App.jsx";
+import { backendUrl } from "../App.jsx";
+import { toast } from "react-toastify"
+import axios from "axios";
 
 const AddProduct = ({ currency }) => {
   const [description, setDescription] = useState("");
@@ -10,15 +12,9 @@ const AddProduct = ({ currency }) => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
-
-      formData.append("description", description);
-      formData.append("mrp", mrp);
-      formData.append("rate", rate);
-
       const response = await axios.post(
         backendUrl + "/api/product/add",
-        formData
+        {description,mrp,rate}
       );
 
       if (response.data.success) {

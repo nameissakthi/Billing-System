@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { backendUrl } from "../App";
+import { toast } from "react-toastify"
 
 const ListProducts = ({ currency }) => {
   
@@ -23,7 +24,13 @@ const ListProducts = ({ currency }) => {
 
   const removeProduct = async (id) => {
     try {
-      const response = await axios.post(backendUrl + "/api/product/remove",{ id });
+      const response = await axios.delete(backendUrl + "/api/product/remove", { 
+        headers : {
+          id
+        }
+       } );
+      console.log(id);
+      
       if (response.data.success) {
         toast.success(response.data.message);
         await fetchList();

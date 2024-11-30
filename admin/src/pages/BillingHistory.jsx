@@ -24,8 +24,6 @@ const BillingHistory = () => {
     fetchHistory();
   }, []);
 
-  console.log(history);
-
   return (
     <div>
       <p className="mb-2">Billing History</p>

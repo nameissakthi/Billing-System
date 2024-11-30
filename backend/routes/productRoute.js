@@ -4,7 +4,7 @@ import { addProduct, listProducts, removeProduct } from "../controller/productCo
 const productRouter = express.Router()
 
 productRouter.post("/add", addProduct)
-productRouter.get("/remove", removeProduct)
+productRouter.delete("/remove", removeProduct)
 productRouter.get("/list", listProducts)
 
 export default productRouter
