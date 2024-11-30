@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./BillingSystem.css";
 import { currency } from "../../App";
 import { tax } from "../../App";
+import axios from "axios";
+import { backendUrl } from "../../App";
+import { IoTrashBinOutline  } from "react-icons/io5"
 
 const BillingSystem = ({products}) => {
-
-  console.log(products)
 
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -13,14 +14,25 @@ const BillingSystem = ({products}) => {
   const [cart, setCart] = useState([]);
   const [discount, setDiscount] = useState(0); 
 
+  const addHistory = async () => {
+    try {
+      const response = await axios.post(backendUrl + '/api/billinghistory/add', {
+        products : cart,
+      })
+      console.log("history saved successfully")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleAddToCart = () => {
     if (!selectedProduct || quantity <= 0) return;
 
-    const existingItem = cart.find((item) => item.id === selectedProduct.id);
+    const existingItem = cart.find((item) => item._id === selectedProduct._id);
     if (existingItem) {
       setCart(
         cart.map((item) =>
-          item.id === selectedProduct.id
+          item._id === selectedProduct._id
             ? { ...item, quantity: item.quantity + quantity }
             : item
         )
@@ -130,6 +142,7 @@ const BillingSystem = ({products}) => {
 
     printWindow.document.close();
     printWindow.print();
+    addHistory()
   };
 
   return (
@@ -220,8 +233,8 @@ const BillingSystem = ({products}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.map((item) => (
-                    <tr>
+                  {cart.map((item, index) => (
+                    <tr key={index}>
                       <td>{item.description}</td>
                       <td>{currency}{item.rate}</td>
                       <td>{item.quantity}</td>
@@ -231,7 +244,7 @@ const BillingSystem = ({products}) => {
                           onClick={() => handleRemoveFromCart(item._id)}
                           className="remove-button"
                         >
-                          Remove
+                          <IoTrashBinOutline/>
                         </button>
                       </td>
                     </tr>

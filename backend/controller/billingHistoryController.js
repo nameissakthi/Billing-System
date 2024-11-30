@@ -4,9 +4,9 @@ const addBillingHistory = async (req, res) => {
     try {
         const { products, date, time } = req.body
 
-        let netAmt = products.map(value => value.qty*value.rate)
+        let netAmt = products.map(value => value.quantity*value.rate)
         let sum = 0;
-        netAmt.forEach(num => sum +=num) 
+        netAmt.forEach(num => sum+=num) 
 
         const billingHistoryData = {
             products,

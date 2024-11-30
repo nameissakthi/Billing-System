@@ -3,9 +3,9 @@ import "./App.css";
 import BillingSystem from "./Components/BillingSystem/BillingSystem";
 import axios from "axios";
 
-export const currency = "$";
+export const currency = "₹";
 export const tax = 18;
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function App() {
 
