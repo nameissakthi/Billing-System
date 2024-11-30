@@ -1,0 +1,167 @@
+    .billing-system {
+    text-align: center;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .main-container{
+    width: 80%;
+    padding: 50px;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+
+  .search-section {
+    width: 100%;
+    position: relative;
+    input{
+      box-sizing: border-box;
+      width: inherit;
+      padding: 10px;
+    }
+  }
+  
+  .suggestion-list {
+    max-height: 150px;
+    overflow-y: auto;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: left;
+    position: absolute;
+    z-index: 10;
+  }
+
+  .suggestion-list::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+  }
+  
+  /* Track */
+  .suggestion-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .suggestion-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .add-section{
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 5px 20px;
+    background-color: #888;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    >div{
+      display: flex;
+      justify-content: space-between;
+      input{
+        width: 50px;
+        margin-right: 10px;
+        border: none;
+        background-color: #e6e6e6;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+      }
+    }
+  }
+  
+  .cart-section {
+    margin-top: 20px;
+    table{
+      width: 100%;
+      border: 2px solid black;
+      border-radius: 20px;
+      border-collapse: collapse;
+      thead{
+        td{
+          padding: 20px 10px;
+          background-color: #ddd;
+        }
+      }
+      td{
+        padding: 10px;
+        button{
+          width: 50%;
+          scale: 1;
+          background-color: red;
+        }
+        button:active{
+          scale: 0.9;
+        }
+      }
+    }
+  }
+  
+  .empty-cart {
+    font-size: 16px;
+    color: #888;
+  }
+  
+  .main-container{
+    hr{
+      margin-top: 40px; 
+    }
+  }
+
+  .summary {
+    margin-top: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: end;
+    table{
+      tr{
+        td{
+          font-size: large;
+          input{
+            border: 1px solid black;
+            padding: 5px;
+            text-align: right;
+            border-radius: 5px;
+          }
+        }
+        td:nth-child(1){
+          text-align: left;
+        }
+      }
+    }
+  }
+  
+  .print-section {
+    margin-top: 30px;
+  }
+  
+  .print-button {
+    width: 10vw;
+    padding: 10px 30px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .print-button:hover {
+    background-color: #0056b3;
+    scale: 1.1;
+    transition-property: all;
+    transition-duration: 50ms;
+    transition-timing-function: ease-in-out;
+  }
+  .print-button:active{
+    scale: 0.95;
+  }
+  
