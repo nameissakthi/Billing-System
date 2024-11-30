@@ -94,9 +94,11 @@
       td{
         padding: 10px;
         button{
-          width: 50%;
           scale: 1;
           background-color: red;
+          >*{
+            font-size: 1.5rem;
+          }
         }
         button:active{
           scale: 0.9;

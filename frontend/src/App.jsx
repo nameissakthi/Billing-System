@@ -17,7 +17,7 @@ function App() {
       if (response.data.success) {
         setProducts(response.data.products);
       } else {
-        toast.error(response.data.message);
+        console.error(response.data.message);
       }
     } catch (error) {
       console.log(error);
