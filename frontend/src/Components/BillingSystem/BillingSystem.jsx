@@ -53,7 +53,7 @@ const BillingSystem = ({products}) => {
     return cart.reduce((sum, item) => sum + item.sp * item.quantity, 0);
   };
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
     const printWindow = window.open("", "", "width=800,height=600");
     const cartItems = cart
       .map(
@@ -130,7 +130,7 @@ const BillingSystem = ({products}) => {
 
     printWindow.document.close();
     printWindow.print();
-    addHistory();
+    await addHistory();
   };
 
   const generateBillNumber = async () => {
