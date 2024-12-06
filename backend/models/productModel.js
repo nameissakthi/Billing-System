@@ -5,11 +5,11 @@ const productSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    mrp : {
+    cp : {
         type : Number,
         required : true
     },
-    rate : {
+    sp : {
         type : Number,
         required : true
     }

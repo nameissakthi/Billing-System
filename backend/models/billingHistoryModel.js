@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const billingHistory = new mongoose.Schema({
+    billNum : {
+        type: String,
+        required : true
+    },
     products : {
         type : Array,
         required : true
@@ -15,6 +19,10 @@ const billingHistory = new mongoose.Schema({
     },
     time : {
         type : String,
+        required : true
+    },
+    savings : {
+        type : Number,
         required : true
     }
 })

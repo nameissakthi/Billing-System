@@ -2,12 +2,12 @@ import productModel from "../models/productModel.js"
 
 const addProduct = async (req, res) => {
     try {
-        const { description, mrp, rate } = req.body
+        const { description, cp, sp } = req.body
         
         const productData = {
             description,
-            mrp: Number(mrp),
-            rate: Number(rate)
+            cp: Number(cp),
+            sp: Number(sp)
         }
         const product = new productModel(productData)
         await product.save()

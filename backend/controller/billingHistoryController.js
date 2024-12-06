@@ -2,17 +2,25 @@ import billingHistoryModel from "../models/billingHistoryModel.js";
 
 const addBillingHistory = async (req, res) => {
     try {
-        const { products, date, time } = req.body
+        const { products, date, time, billNum } = req.body
 
-        let netAmt = products.map(value => value.quantity*value.rate)
+        let netAmt = products.map(value => value.quantity*value.sp)
         let sum = 0;
         netAmt.forEach(num => sum+=num) 
 
+        let savings = 0;
+        let cpSum = 0
+        let savingsNetAmt = products.map(value => value.quantity*value.cp)
+        savingsNetAmt.forEach(num => cpSum+=num)
+        savings = sum-cpSum
+
         const billingHistoryData = {
+            billNum, 
             products,
             totalAmt : sum,
             date : date || new Date().toLocaleDateString(),
             time : time || new Date().toLocaleTimeString(),
+            savings
         }
 
         const billingHistory = new billingHistoryModel(billingHistoryData)

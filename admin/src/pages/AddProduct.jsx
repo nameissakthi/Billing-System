@@ -5,8 +5,8 @@ import axios from "axios";
 
 const AddProduct = ({ currency }) => {
   const [description, setDescription] = useState("");
-  const [mrp, setMrp] = useState("");
-  const [rate, setRate] = useState("");
+  const [cp, setCp] = useState("");
+  const [sp, setSp] = useState("");
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -14,14 +14,14 @@ const AddProduct = ({ currency }) => {
     try {
       const response = await axios.post(
         backendUrl + "/api/product/add",
-        {description,mrp,rate}
+        {description,cp,sp}
       );
 
       if (response.data.success) {
         toast.success(response.data.message);
         setDescription("");
-        setMrp("");
-        setRate("");
+        setCp("");
+        setSp("");
       } else {
         toast.error(response.data.message);
       }
@@ -51,10 +51,10 @@ const AddProduct = ({ currency }) => {
       <div className="flex justify-between w-[500px]">
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-8">
           <div>
-            <p className="mb-2 mr-3 inline">Product MRP</p>
+            <p className="mb-2 mr-3 inline">Product Cost Price</p>
             <input
-              onChange={(e) => setMrp(e.target.value)}
-              value={mrp}
+              onChange={(e) => setCp(e.target.value)}
+              value={cp}
               className="w-full px-3 py-2 sm:w-[120px] rounded"
               type="number"
               placeholder={`Eg.${currency}25`}
@@ -64,10 +64,10 @@ const AddProduct = ({ currency }) => {
 
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-8">
           <div>
-            <p className="mb-2 mr-3 inline">Product Rate</p>
+            <p className="mb-2 mr-3 inline">Product Selling Price</p>
             <input
-              onChange={(e) => setRate(e.target.value)}
-              value={rate}
+              onChange={(e) => setSp(e.target.value)}
+              value={sp}
               className="w-full px-3 py-2 sm:w-[120px] rounded"
               type="number"
               placeholder={`Eg.${currency}25`}

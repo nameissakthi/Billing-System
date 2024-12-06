@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./BillingSystem.css";
 import { currency } from "../../App";
-import { tax } from "../../App";
 import axios from "axios";
 import { backendUrl } from "../../App";
 import { IoTrashBinOutline  } from "react-icons/io5"
@@ -12,12 +11,13 @@ const BillingSystem = ({products}) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [cart, setCart] = useState([]);
-  const [discount, setDiscount] = useState(0); 
+  const [billNumber,setBillNumber] = useState("");
 
   const addHistory = async () => {
     try {
       const response = await axios.post(backendUrl + '/api/billinghistory/add', {
         products : cart,
+        billNum : billNumber
       })
       console.log("history saved successfully")
     } catch (error) {
@@ -49,31 +49,19 @@ const BillingSystem = ({products}) => {
     setCart(cart.filter((item) => item._id !== id));
   };
 
-  const calculateSubtotal = () => {
-    return cart.reduce((sum, item) => sum + item.rate * item.quantity, 0);
-  };
-
   const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    const discountAmount = (subtotal * discount) / 100;
-    const taxAmount = ((subtotal - discountAmount) * tax) / 100;
-    return subtotal - discountAmount + taxAmount;
-  };
-
-  const generateBillNumber = () => {
-    return Math.floor(100000 + Math.random() * 900000);
+    return cart.reduce((sum, item) => sum + item.sp * item.quantity, 0);
   };
 
   const handlePrint = () => {
-    const billNumber = generateBillNumber();
     const printWindow = window.open("", "", "width=800,height=600");
     const cartItems = cart
       .map(
         (item) => `<tr>
                   <td>${item.description}</td>
                   <td>${item.quantity}</td>
-                  <td>$${item.rate}</td>
-                  <td>$${item.rate * item.quantity}</td>
+                  <td>$${item.sp}</td>
+                  <td>$${item.sp * item.quantity}</td>
                 </tr>`
       )
       .join("");
@@ -142,7 +130,12 @@ const BillingSystem = ({products}) => {
 
     printWindow.document.close();
     printWindow.print();
-    addHistory()
+    addHistory();
+  };
+
+  const generateBillNumber = async () => {
+    await setBillNumber(String(Math.floor(100000 + Math.random() * 900000)));
+    handlePrint();
   };
 
   return (
@@ -175,7 +168,7 @@ const BillingSystem = ({products}) => {
                       onClick={() => setSelectedProduct(product)}
                       className="suggestion-item"
                     >
-                      {product.description} - {currency}{product.rate}
+                      {product.description} - {currency}{product.sp}
                     </li>
                   ))}
               </ul>
@@ -184,7 +177,7 @@ const BillingSystem = ({products}) => {
             {selectedProduct && (
               <div className="add-section">
                 <p>
-                  Selected: {selectedProduct.description} - {currency}{selectedProduct.rate}
+                  Selected: {selectedProduct.description} - {currency}{selectedProduct.sp}
                 </p>
                 <div>
                   <input
@@ -236,9 +229,9 @@ const BillingSystem = ({products}) => {
                   {cart.map((item, index) => (
                     <tr key={index}>
                       <td>{item.description}</td>
-                      <td>{currency}{item.rate}</td>
+                      <td>{currency}{item.sp}</td>
                       <td>{item.quantity}</td>
-                      <td>{currency}{item.rate * item.quantity}</td>
+                      <td>{currency}{item.sp * item.quantity}</td>
                       <td>
                         <button
                           onClick={() => handleRemoveFromCart(item._id)}
@@ -259,18 +252,6 @@ const BillingSystem = ({products}) => {
           <div className="summary" style={{ textAlign: "right" }}>
             <table>
               <tr>
-                <td>Subtotal:</td> <td>{currency}{calculateSubtotal().toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Discount (%):</td> 
-                <td>
-                  <input type="number" value={discount} onChange={e=>setDiscount(e.target.value)} min="0" max="100" className="discount-input" />
-                </td>
-              </tr>
-              <tr>
-                <td>Tax (%):</td> <td>{tax}</td>
-              </tr>
-              <tr>
                 <td>Total:</td> <td>{currency}{calculateTotal().toFixed(2)}</td>
               </tr>
             </table>
@@ -284,7 +265,7 @@ const BillingSystem = ({products}) => {
           Print
         </button>
       ) : (
-        <button onClick={handlePrint} className="print-button"  >
+        <button onClick={generateBillNumber} className="print-button"  >
           Print
         </button>
       )}

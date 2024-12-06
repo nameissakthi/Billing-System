@@ -53,8 +53,8 @@ const ListProducts = ({ currency }) => {
       <div className="flex flex-col gap-2">
         <div className="hidden md:grid grid-cols-[3fr_1fr_1fr_1fr] items-center px-2 py-1 border bg-gray-100 text-sm">
           <b>DESCRIPTION</b>
-          <b>MRP</b>
-          <b>RATE</b>
+          <b>COST PRICE</b>
+          <b>SELLING PRICE</b>
           <b className="text-center">ACTION</b>
         </div>
 
@@ -66,11 +66,11 @@ const ListProducts = ({ currency }) => {
             <p>{product.description}</p>
             <p>
               {currency}
-              {product.mrp}
+              {product.cp}
             </p>
             <p>
               {currency}
-              {product.rate}
+              {product.sp}
             </p>
             <p
               className="text-center cursor-pointer text-lg"
