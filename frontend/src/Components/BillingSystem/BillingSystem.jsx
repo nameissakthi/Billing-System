@@ -135,7 +135,7 @@ const BillingSystem = ({products}) => {
 
   const generateBillNumber = async () => {
     await setBillNumber(String(Math.floor(100000 + Math.random() * 900000)));
-    handlePrint();
+    await handlePrint();
   };
 
   return (
