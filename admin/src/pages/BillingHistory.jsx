@@ -44,11 +44,14 @@ const BillingHistory = () => {
       .map(
         (record) => `
           <div className="item">
-              <p style="border-bottom : 2px solid grey">
-                Bill Number : ${record.billNum}
-                <span>
-                  <span><b>Date : ${record.date}</b></span>
-                  <span><b>Time : ${record.time}</b></span>
+              <p style="border-bottom : 2px solid grey; display : flex; justify-content:space-between;">
+                <span style="display:flex; flex-direction:column;">
+                  <span style="margin-bottom:2px">Bill Number : ${record.billNum}</span2>
+                  <span>Bill To : ${record.billTo}</span2>
+                </span>
+                <span style="display:flex; flex-direction:column;">
+                  <span style="margin-bottom:2px"><b>Date : ${record.date}</b></span2>
+                  <span><b>Time : ${record.time}</b></span2>
                 </span>
               </p>
               ${record.products.map((item, index) => {
@@ -119,10 +122,13 @@ const BillingHistory = () => {
               key={index}
             >
               <p className="mb-2 p-1 border-b-2 border-slate-400 flex justify-between">
-                Bill Number : {record.billNum}
-                <span>
-                  <span className="mr-2 text-slate-800"><b>Date : {record.date}</b></span>
-                  <span><b className="text-slate-800">Time : {record.time}</b></span>
+                <span className="flex flex-col">
+                  <span className="mr-2 text-slate-800"><b>Bill Number :</b> {record.billNum}</span>
+                  <span className="text-slate-800"><b>Bill To :</b> {record.billTo}</span>
+                </span>
+                <span className="flex flex-col">
+                  <span className="mr-2 text-slate-800"><b>Date :</b> {record.date}</span>
+                  <span><b className="text-slate-800">Time :</b> {record.time}</span>
                 </span>
               </p>
               {record.products.map((item, index) => {

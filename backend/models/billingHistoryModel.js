@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const billingHistory = new mongoose.Schema({
     billNum : {
-        type: String,
+        type : String,
+        required : true
+    },
+    billTo : {
+        type : String,
         required : true
     },
     products : {

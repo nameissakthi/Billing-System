@@ -13,10 +13,12 @@ const BillingSystem = ({products}) => {
   const [quantity, setQuantity] = useState(1);
   const [cart, setCart] = useState([]);
   const [billNumber,setBillNumber] = useState("");
+  const [name, setName] = useState("");
 
   const addHistory = async () => {
     try {
       const response = await axios.post(backendUrl + '/api/billinghistory/add', {
+        billTo : name,
         products : cart,
         billNum : billNumber
       })
@@ -44,6 +46,7 @@ const BillingSystem = ({products}) => {
     setSelectedProduct(null);
     setQuantity(1);
     setSearch("");
+    setName("");
   };
 
   const handleRemoveFromCart = (id) => {
@@ -56,6 +59,7 @@ const BillingSystem = ({products}) => {
 
   const handlePrint = async () => {
     const printWindow = window.open("", "", "width=800,height=600");
+    console.log(name)
     const cartItems = cart
       .map(
         (item) => `<tr>
@@ -92,7 +96,7 @@ const BillingSystem = ({products}) => {
                 <td colspan="2">
                   <p style="display:flex; gap: 10px; flex-direction : column;">
                     <span><b>Bill Number</b> : ${billNumber}</span>
-                    <span><b>Bill To</b> : Cash</span>
+                    <span><b>Bill To</b> : ${name}</span>
                   </p>
                 </td>
                 <td colspan="2">
@@ -139,6 +143,9 @@ const BillingSystem = ({products}) => {
       </header>
 
       <div className="main-container">
+        <div className="name">
+          <input type="text" name="name" placeholder="Customer Name" value={name} onChange={e=>setName(e.target.value)} autoFocus required />
+        </div>
         <div className="centered">
           <div className="search-section">
             <input
@@ -147,7 +154,7 @@ const BillingSystem = ({products}) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="search-input"
-              autoFocus
+              required
             />
             {search.length > 0 && !selectedProduct && (
               <ul className="suggestion-list">

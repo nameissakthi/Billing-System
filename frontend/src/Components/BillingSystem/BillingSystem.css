@@ -21,6 +21,16 @@
     padding: 50px;
     border-radius: 10px;
     border: 2px solid black;
+    .name{
+      width: 100%;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: flex-end;
+      input{
+        width: 20%;
+        border: 2px solid black;
+      }
+    }
   }
 
   .search-section {
