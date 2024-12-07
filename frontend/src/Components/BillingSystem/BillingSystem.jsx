@@ -4,6 +4,7 @@ import { currency } from "../../App";
 import axios from "axios";
 import { backendUrl } from "../../App";
 import { IoTrashBinOutline  } from "react-icons/io5"
+import logo from "../../assets/logo.png"
 
 const BillingSystem = ({products}) => {
 
@@ -141,7 +142,7 @@ const BillingSystem = ({products}) => {
   return (
     <div className="billing-system">
       <header>
-        <h1>Quick Bills</h1>
+        <img src={logo} alt="Logo" className="logo" />
       </header>
 
       <div className="main-container">

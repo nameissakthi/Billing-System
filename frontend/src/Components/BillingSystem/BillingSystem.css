@@ -5,6 +5,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    header{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0px;
+      .logo{
+        width: 20%;
+      }
+    }
   }
   
   .main-container{

@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Analyze from "./pages/Analyze";
+import Header from "./components/Header";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
