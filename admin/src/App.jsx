@@ -19,7 +19,7 @@ function App() {
         <Sidebar />
         <div className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base">
           <Routes>
-            <Route path="/" element={<BillingHistory/>} />
+            <Route path="/" element={<BillingHistory currency={currency}/>} />
             <Route path="/listproducts" element={<ListProducts currency={currency} />} />
             <Route path="/addproduct" element={<AddProduct currency={currency} />} />
             <Route path="/analyze" element={<Analyze currency={currency} />} />

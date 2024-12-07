@@ -3,7 +3,7 @@ import axios from "axios";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 
-const BillingHistory = () => {
+const BillingHistory = ({currency}) => {
   const [history, setHistory] = useState([]);
 
   const fetchHistory = async () => {
@@ -40,36 +40,35 @@ const BillingHistory = () => {
 
   const handlePrint = async () => {
     const printWindow = window.open("", "", "width=800,height=600");
-    const hist = await history
-      .map(
-        (record) => `
-          <div className="item">
-              <p style="border-bottom : 2px solid grey; display : flex; justify-content:space-between;">
-                <span style="display:flex; flex-direction:column;">
-                  <span style="margin-bottom:2px">Bill Number : ${record.billNum}</span2>
-                  <span>Bill To : ${record.billTo}</span2>
-                </span>
-                <span style="display:flex; flex-direction:column;">
-                  <span style="margin-bottom:2px"><b>Date : ${record.date}</b></span2>
-                  <span><b>Time : ${record.time}</b></span2>
-                </span>
-              </p>
-              ${record.products.map((item, index) => {
-                return (`
-                  <span>
-                    ${item.description} x ${item.quantity}${" "}
-                    <span>[CP - ${item.cp}]</span>
-                    <span>[SP-${item.sp}]</span> 
-                  </span>`
-                );
-              })}
-              <p>
-                <span><b>Total Amount : ${record.totalAmt}</b></span>
-                <span><b>Savings : ${record.savings}</b></span>
-              </p>
-            </div>
-        `
-      )
+
+    const hist = history.map((record, index) => `
+      <tr>
+        <td style="text-align: center;">${index+1}</td>
+        <td style="text-align: center;">${record.billNum}</td>
+        <td style="text-align: center;">${record.billTo}</td>
+        <td style="width: 60px;">
+          <p style="display:flex; flex-direction:column;">
+            <span>${record.date}</span>
+            <span>${record.time}</span>
+          </p>
+        </td>
+        <td>
+          <p style="display: flex; flex-direction: column;">
+            ${record.products.map((item) => {
+              return (`
+                <span>
+                  ${item.description} x ${item.quantity}${" "}
+                  <span>[CP - ${item.cp}]</span>
+                  <span>[SP-${item.sp}]</span> 
+                </span>`
+              );
+            }).join("")}
+          </p>
+        </td>
+        <td style="text-align: center;">${currency}${record.totalAmt}</td>
+        <td style="text-align: center;">${currency}${record.savings}</td>
+      </tr>
+      `)
       .join("")
 
     printWindow.document.write(`
@@ -78,20 +77,29 @@ const BillingHistory = () => {
           <title>Bill</title>
           <style>
             body { font-family: Arial, sans-serif; }
-            section {
-              display : flex;
-              flex-direction: column;
-              gap : 10px;
-            }
-            div{ border : 2px solid black; padding : 10px; }
-            p{ display : flex; justify-content : space-between; }
+            table { border-collapse: collapse; }
+            td { border:2px solid black; padding : 5px }
+            span{ margin: 2px 0px; }
           </style>
         </head>
         <body>
           <h1>History</h1>
-          <section>
-            ${hist}
-          </section>
+          <table style="font-size: 10px;">
+            <thead>
+              <tr style="text-align: center; font-size: 12px;">\
+                <td><b>S. No.</b></td>
+                <td><b>Bill Number</b></td>
+                <td><b>Bill To</b></td>
+                <td><b>Date & Time</b></td>
+                <td><b>Products</b></td>
+                <td><b>Total Amount</b></td>
+                <td><b>Savings</b></td>
+              </tr>
+            </thead>
+            <tbody>
+              ${hist}
+            </tbody>
+          </table>
         </body>
       </html>
     `);
@@ -151,8 +159,8 @@ const BillingHistory = () => {
                 }
               })}
               <div className="flex justify-between mt-2">
-                <span className="text-slate-950"><b>Total Amount : {record.totalAmt}</b></span>
-                <span className="text-slate-950"><b>Savings : {record.savings}</b></span>
+                <span className="text-slate-950"><b>Total Amount : {currency}{record.totalAmt}</b></span>
+                <span className="text-slate-950"><b>Savings : {currency}{record.savings}</b></span>
               </div>
             </div>
           );
