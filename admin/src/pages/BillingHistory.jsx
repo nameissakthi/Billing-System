@@ -36,6 +36,67 @@ const BillingHistory = () => {
     }
   };
 
+
+
+  const handlePrint = async () => {
+    const printWindow = window.open("", "", "width=800,height=600");
+    const hist = await history
+      .map(
+        (record) => `
+          <div className="item">
+              <p style="border-bottom : 2px solid grey">
+                Bill Number : ${record.billNum}
+                <span>
+                  <span><b>Date : ${record.date}</b></span>
+                  <span><b>Time : ${record.time}</b></span>
+                </span>
+              </p>
+              ${record.products.map((item, index) => {
+                return (`
+                  <span>
+                    ${item.description} x ${item.quantity}${" "}
+                    <span>[CP - ${item.cp}]</span>
+                    <span>[SP-${item.sp}]</span> 
+                  </span>`
+                );
+              })}
+              <p>
+                <span><b>Total Amount : ${record.totalAmt}</b></span>
+                <span><b>Savings : ${record.savings}</b></span>
+              </p>
+            </div>
+        `
+      )
+      .join("")
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Bill</title>
+          <style>
+            body { font-family: Arial, sans-serif; }
+            section {
+              display : flex;
+              flex-direction: column;
+              gap : 10px;
+            }
+            div{ border : 2px solid black; padding : 10px; }
+            p{ display : flex; justify-content : space-between; }
+          </style>
+        </head>
+        <body>
+          <h1>History</h1>
+          <section>
+            ${hist}
+          </section>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   useEffect(() => {
     fetchHistory();
   }, [clearHistory]);
@@ -44,7 +105,10 @@ const BillingHistory = () => {
     <div>
       <p className="text-xl flex justify-between">
         <span>Billing History</span>
-        <button onClick={clearHistory} className="text-base p-2 bg-red-700 text-white rounded">Clear History</button>
+        <div className="flex gap-2">
+          <button onClick={clearHistory} className="text-base p-2 bg-red-700 text-white rounded">Clear History</button>
+          <button onClick={handlePrint} className="text-base p-2 bg-violet-700 text-white rounded">Print</button>
+        </div>
       </p>
       <hr className="mt-4 mb-8 border-black" />
       <div className="flex flex-col">

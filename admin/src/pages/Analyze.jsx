@@ -48,8 +48,8 @@ const Analyze = ({currency}) => {
     <>
         <div>
             <div className='flex justify-between mb-3'>
-                <h1 className='text-xl'>Todays Analysis</h1>
-                <button onClick={()=>window.location.reload()} className="text-base p-2 bg-blue-700 text-white rounded float-end">Refresh</button>
+                <h1 className='text-xl'>Analysis</h1>
+                <button onClick={()=>window.location.reload()} className="text-base p-2 bg-violet-700 text-white rounded float-end">Refresh</button>
             </div>
             <div className='grid grid-cols-2 mb-5 gap-2'>
                 <div className='text-xl border-2 p-4 py-8'>
