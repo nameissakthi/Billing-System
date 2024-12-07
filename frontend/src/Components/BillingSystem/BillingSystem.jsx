@@ -61,8 +61,8 @@ const BillingSystem = ({products}) => {
         (item) => `<tr>
                   <td>${item.description}</td>
                   <td>${item.quantity}</td>
-                  <td>$${item.sp}</td>
-                  <td>$${item.sp * item.quantity}</td>
+                  <td>${currency}${item.sp}</td>
+                  <td>${currency}${item.sp * item.quantity}</td>
                 </tr>`
       )
       .join("");
@@ -74,43 +74,34 @@ const BillingSystem = ({products}) => {
           <title>Bill</title>
           <style>
             body { font-family: Arial, sans-serif; }
-            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-            th, td { border: none; padding: 8px; text-align: left; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border : 2px solid black; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
-            div{ width: 100%; display: flex; justify-content: end; 
-             table{
-             width: 35%;
-             border: none;
-              tr{
-                td:nth-child(1){
-                  text-align: left;
-                }
-                td:nth-child(2){
-                  text-align: right;
-                }
-              }
-             }
-            }
-            .amount { text-align: right; margin-top: 20px; font-size: 16px; }
+            h2 { margin : 0px; text-align : center; }
+            img{ width : 200px; position : relative; left : 50%; translate : -50%; margin-bottom : 10px;}
           </style>
         </head>
         <body>
-          <h1>Invoice</h1>
-          <div>
-            <table>
-              <tr>
-                <td>Bill Number :</td> <td>${billNumber}</td>
-              </tr>
-              <tr>
-                <td>Date :</td> <td>${new Date().toLocaleDateString()}</td>
-              </tr>
-              <tr>
-                <td>Time :</td> <td>${new Date().toLocaleTimeString()}</td>
-              </tr>
-            </table>
-          </div>
+          <img src=${logo} alt="LOGO" />
           <table>
             <thead>
+              <tr>
+                <td colspan="4"><h2>Invoice</h2></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <p style="display:flex; gap: 10px; flex-direction : column;">
+                    <span><b>Bill Number</b> : ${billNumber}</span>
+                    <span><b>Bill To</b> : Cash</span>
+                  </p>
+                </td>
+                <td colspan="2">
+                  <p style="display:flex; gap: 10px; flex-direction : column;">
+                    <span><b>Date</b> : ${new Date().toLocaleDateString()}</span>
+                    <span><b>Time</b> : ${new Date().toLocaleTimeString()}</span>
+                  </p>
+                </td>
+              </tr>
               <tr>
                 <th>Product</th>
                 <th>Quantity</th>
@@ -121,10 +112,12 @@ const BillingSystem = ({products}) => {
             <tbody>
               ${cartItems}
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3"><b>Total</b></td><td><b>${currency}${total}</b></td>
+              </tr>
+            </tfoot>
           </table>
-          <div class="amount">
-            <p>Total: $${total}</p>
-          </div>
         </body>
       </html>
     `);
