@@ -3,6 +3,7 @@ import axios from "axios";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 import { useState, useEffect, useRef } from 'react';
+import commafy from "commafy"
 
 const Analyze = ({currency}) => {
 
@@ -57,19 +58,19 @@ const Analyze = ({currency}) => {
                 <section>
                     <div>
                         <h3><b>Total Products Sold</b></h3>
-                        <span>${analyse[0]}</span>
+                        <span>${commafy(analyse[0])}</span>
                     </div>
                     <div>
                         <h3><b>Total Cost Price</b></h3>
-                        <span>${currency}${analyse[1]}</span>
+                        <span>${currency}${commafy(analyse[1])}</span>
                     </div>
                     <div>
                         <h3><b>Total Amount</b></h3>
-                        <span>${currency}${analyse[2]}</span>
+                        <span>${currency}${commafy(analyse[2])}</span>
                     </div>
                     <div>
                         <h3><b>${analyse[3]>0?"Profit ↑":"Loss ↓"}</b></h3>
-                        <span>${currency}${analyse[3]}</span>
+                        <span>${currency}${commafy(analyse[3])}</span>
                     </div>
                 </section>
               </body>
@@ -97,19 +98,19 @@ const Analyze = ({currency}) => {
             <div className='grid grid-cols-2 mb-5 gap-2'>
                 <div className='text-xl border-2 p-4 py-8'>
                     <h3 className='mb-2'><b>Total Products Sold</b></h3>
-                    <span>{analyse[0]}</span>
+                    <span>{commafy(analyse[0])}</span>
                 </div>
                 <div className='text-xl border-2 p-4 py-8'>
                     <h3 className='mb-2'><b>Total Cost Price</b></h3>
-                    <span>{currency}{analyse[1]}</span>
+                    <span>{currency}{commafy(analyse[1])}</span>
                 </div>
                 <div className='text-xl border-2 p-4 py-8'>
                     <h3 className='mb-2'><b>Total Amount</b></h3>
-                    <span>{currency}{analyse[2]}</span>
+                    <span>{currency}{commafy(analyse[2])}</span>
                 </div>
                 <div className='text-xl border-2 p-4 py-8'>
                     <h3 className={`${analyse[3]>0?'text-green-600':'text-red-600'} mb-2`}><b>{analyse[3]>0?"Profit":"Loss"}</b></h3>
-                    <span>{currency}{analyse[3]}{" "}</span>
+                    <span>{currency}{commafy(analyse[3])}{" "}</span>
                 </div>
             </div>
         </div>

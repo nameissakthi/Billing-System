@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify"
+import commafy from "commafy"
 
 const ListProducts = ({ currency }) => {
   
@@ -66,11 +67,11 @@ const ListProducts = ({ currency }) => {
             <p>{product.description}</p>
             <p>
               {currency}
-              {product.cp}
+              {commafy(product.cp)}
             </p>
             <p>
               {currency}
-              {product.sp}
+              {commafy(product.sp)}
             </p>
             <p
               className="text-center cursor-pointer text-lg"
