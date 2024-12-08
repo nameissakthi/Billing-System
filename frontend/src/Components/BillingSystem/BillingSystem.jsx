@@ -136,7 +136,7 @@ const BillingSystem = ({products}) => {
                 <td colspan="4"><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td>
               </tr>
               <tr>
-                <td colspan="2" style="padding-top:40px; text-align:center;">Authorized Signature</td><td colspan="3" style="padding-top:40px; text-align:center;">Customer Signature</td>
+                <td colspan="2" style="padding-top:40px; text-align:center;">Customer's Signature</td><td colspan="3" style="padding-top:40px; text-align:center;">Authorized Signatory</td>
               </tr>
             </tfoot>
           </table>
