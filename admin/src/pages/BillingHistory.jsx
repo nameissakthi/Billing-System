@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
-import commafy from "commafy"
+import fmt from "indian-number-format"
 
 const BillingHistory = ({currency}) => {
   const [history, setHistory] = useState([]);
@@ -59,15 +59,15 @@ const BillingHistory = ({currency}) => {
               return (`
                 <span>
                   ${item.description} x ${item.quantity}${" "}
-                  <span>[CP - ${commafy(item.cp)}]</span>
-                  <span>[SP-${commafy(item.sp)}]</span> 
+                  <span>[CP - ${fmt.format(item.cp)}]</span>
+                  <span>[SP-${fmt.format(item.sp)}]</span> 
                 </span>`
               );
             }).join("")}
           </p>
         </td>
-        <td style="text-align: center;">${currency}${commafy(record.totalAmt)}</td>
-        <td style="text-align: center;">${currency}${commafy(record.savings)}</td>
+        <td style="text-align: center;">${currency}${fmt.format(record.totalAmt)}</td>
+        <td style="text-align: center;">${currency}${fmt.format(record.savings)}</td>
       </tr>
       `)
       .join("")
@@ -145,23 +145,23 @@ const BillingHistory = ({currency}) => {
                   return (
                     <span className="py-0.5" key={index}>
                       {item.description} x {item.quantity}{" "}
-                      <span>[CP - {commafy(item.cp)}]</span>
-                      <span>[SP-{commafy(item.sp)}]</span> 
+                      <span>[CP - {fmt.format(item.cp)}]</span>
+                      <span>[SP-{fmt.format(item.sp)}]</span> 
                     </span>
                   );
                 } else {
                   return (
                     <span className="py-0.5" key={index}>
                       {item.description} {"   "} x {item.quantity}{" "}
-                      <span>[CP - {commafy(item.cp)}]</span>
-                      <span>[SP - {commafy(item.sp)}]</span>,{" "}
+                      <span>[CP - {fmt.format(item.cp)}]</span>
+                      <span>[SP - {fmt.format(item.sp)}]</span>,{" "}
                     </span>
                   );
                 }
               })}
               <div className="flex justify-between mt-2">
-                <span className="text-slate-950"><b>Total Amount : {currency}{commafy(record.totalAmt)}</b></span>
-                <span className="text-slate-950"><b>Savings : {currency}{commafy(record.savings)}</b></span>
+                <span className="text-slate-950"><b>Total Amount : {currency}{fmt.format(record.totalAmt)}</b></span>
+                <span className="text-slate-950"><b>Savings : {currency}{fmt.format(record.savings)}</b></span>
               </div>
             </div>
           );

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify"
-import commafy from "commafy"
+import fmt from "indian-number-format"
 
 const ListProducts = ({ currency }) => {
   
@@ -67,11 +67,11 @@ const ListProducts = ({ currency }) => {
             <p>{product.description}</p>
             <p>
               {currency}
-              {commafy(product.cp)}
+              {fmt.format(product.cp)}
             </p>
             <p>
               {currency}
-              {commafy(product.sp)}
+              {fmt.format(product.sp)}
             </p>
             <p
               className="text-center cursor-pointer text-lg"

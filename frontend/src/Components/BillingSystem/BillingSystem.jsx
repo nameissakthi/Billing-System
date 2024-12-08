@@ -5,7 +5,7 @@ import axios from "axios";
 import { backendUrl } from "../../App";
 import { IoTrashBinOutline  } from "react-icons/io5"
 import logo from "../../assets/logo.png"
-import commafy from "commafy"
+import fmt from "indian-number-format"
 
 const BillingSystem = ({products}) => {
 
@@ -75,11 +75,12 @@ const BillingSystem = ({products}) => {
   
     const cartItems = cart
       .map(
-        (item) => `<tr>
+        (item, index) => `<tr>
+                      <td style="text-align:center;">${index+1}</td>
                       <td>${item.description}</td>
                       <td style="text-align:center;">${item.quantity}</td>
-                      <td style="text-align:center;">${currency}${commafy(item.sp)}</td>
-                      <td style="text-align:center;">${currency}${commafy(item.sp * item.quantity)}</td>
+                      <td style="text-align:center;">${currency}${fmt.format(item.sp)}</td>
+                      <td style="text-align:center;">${currency}${fmt.format(item.sp * item.quantity)}</td>
                     </tr>`
       )
       .join("");
@@ -103,10 +104,10 @@ const BillingSystem = ({products}) => {
           <table>
             <thead>
               <tr>
-                <td colspan="4"><h2>Invoice</h2></td>
+                <td colspan="5"><h2>Cash Bill</h2></td>
               </tr>
               <tr>
-                <td colspan="1">
+                <td colspan="2">
                   <p style="display:flex; gap: 10px; flex-direction: column;">
                     <span><b>Bill Number</b>: ${generatedBillNumber}</span>
                     <span><b>Bill To</b>: ${name}</span>
@@ -120,6 +121,7 @@ const BillingSystem = ({products}) => {
                 </td>
               </tr>
               <tr>
+                <th style="text-align:center;">S. No.</th>
                 <th style="text-align:center;">Product</th>
                 <th style="text-align:center;">Quantity</th>
                 <th style="text-align:center;">Price</th>
@@ -131,10 +133,10 @@ const BillingSystem = ({products}) => {
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="3"><b>Total</b></td><td style="text-align:center;"><b>${currency}${commafy(total)}</b></td>
+                <td colspan="4"><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td>
               </tr>
               <tr>
-                <td colspan="1" style="padding-top:40px; text-align:center;">Authorized Signature</td><td colspan="3" style="padding-top:40px; text-align:center;">Customer Signature</td>
+                <td colspan="2" style="padding-top:40px; text-align:center;">Authorized Signature</td><td colspan="3" style="padding-top:40px; text-align:center;">Customer Signature</td>
               </tr>
             </tfoot>
           </table>
@@ -200,7 +202,7 @@ const BillingSystem = ({products}) => {
                       onClick={() => setSelectedProduct(product)}
                       className="suggestion-item"
                     >
-                      {product.description} - {currency}{commafy(product.sp)}
+                      {product.description} - {currency}{fmt.format(product.sp)}
                     </li>
                   ))}
               </ul>
@@ -209,7 +211,7 @@ const BillingSystem = ({products}) => {
             {selectedProduct && (
               <div className="add-section">
                 <p>
-                  Selected: {selectedProduct.description} - {currency}{commafy(selectedProduct.sp)}
+                  Selected: {selectedProduct.description} - {currency}{fmt.format(selectedProduct.sp)}
                 </p>
                 <div>
                   <input
@@ -261,9 +263,9 @@ const BillingSystem = ({products}) => {
                   {cart.map((item, index) => (
                     <tr key={index}>
                       <td>{item.description}</td>
-                      <td>{currency}{commafy(item.sp)}</td>
+                      <td>{currency}{fmt.format(item.sp)}</td>
                       <td>{item.quantity}</td>
-                      <td>{currency}{commafy(item.sp * item.quantity)}</td>
+                      <td>{currency}{fmt.format(item.sp * item.quantity)}</td>
                       <td>
                         <button
                           onClick={() => handleRemoveFromCart(item._id)}
@@ -284,7 +286,7 @@ const BillingSystem = ({products}) => {
           <div className="summary" style={{ textAlign: "right" }}>
             <table>
               <tr>
-                <td>Total:</td> <td>{currency}{commafy(calculateTotal().toFixed(2))}</td>
+                <td>Total:</td> <td>{currency}{fmt.format(calculateTotal().toFixed(2))}</td>
               </tr>
             </table>
           </div>
