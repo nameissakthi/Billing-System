@@ -57,21 +57,28 @@ const BillingSystem = ({products}) => {
     return cart.reduce((sum, item) => sum + item.sp * item.quantity, 0);
   };
 
-  const handlePrint = async () => {
+  const generateBillNumber = async () => {
+    const generatedBillNumber = String(Math.floor(100000 + Math.random() * 900000));
+    setBillNumber(generatedBillNumber);
+  
+    // Wait for state update to propagate before proceeding
+    setTimeout(() => handlePrint(generatedBillNumber), 0);
+  };
+  
+  const handlePrint = async (generatedBillNumber) => {
     const printWindow = window.open("", "", "width=800,height=600");
-    console.log(name)
     const cartItems = cart
       .map(
         (item) => `<tr>
-                  <td>${item.description}</td>
-                  <td>${item.quantity}</td>
-                  <td>${currency}${item.sp}</td>
-                  <td>${currency}${item.sp * item.quantity}</td>
-                </tr>`
+                      <td>${item.description}</td>
+                      <td>${item.quantity}</td>
+                      <td>${currency}${item.sp}</td>
+                      <td>${currency}${item.sp * item.quantity}</td>
+                    </tr>`
       )
       .join("");
     const total = calculateTotal().toFixed(2);
-
+  
     printWindow.document.write(`
       <html>
         <head>
@@ -81,8 +88,8 @@ const BillingSystem = ({products}) => {
             table { width: 100%; border-collapse: collapse; }
             th, td { border : 2px solid black; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
-            h2 { margin : 0px; text-align : center; }
-            img{ width : 200px; position : relative; left : 50%; translate : -50%; margin-bottom : 10px;}
+            h2 { margin: 0px; text-align: center; }
+            img { width: 200px; display: block; margin: 10px auto; }
           </style>
         </head>
         <body>
@@ -94,15 +101,15 @@ const BillingSystem = ({products}) => {
               </tr>
               <tr>
                 <td colspan="2">
-                  <p style="display:flex; gap: 10px; flex-direction : column;">
-                    <span><b>Bill Number</b> : ${billNumber}</span>
-                    <span><b>Bill To</b> : ${name}</span>
+                  <p style="display:flex; gap: 10px; flex-direction: column;">
+                    <span><b>Bill Number</b>: ${generatedBillNumber}</span>
+                    <span><b>Bill To</b>: ${name}</span>
                   </p>
                 </td>
                 <td colspan="2">
-                  <p style="display:flex; gap: 10px; flex-direction : column;">
-                    <span><b>Date</b> : ${new Date().toLocaleDateString()}</span>
-                    <span><b>Time</b> : ${new Date().toLocaleTimeString()}</span>
+                  <p style="display:flex; gap: 10px; flex-direction: column;">
+                    <span><b>Date</b>: ${new Date().toLocaleDateString()}</span>
+                    <span><b>Time</b>: ${new Date().toLocaleTimeString()}</span>
                   </p>
                 </td>
               </tr>
@@ -125,15 +132,22 @@ const BillingSystem = ({products}) => {
         </body>
       </html>
     `);
-
+  
     printWindow.document.close();
+  
+    printWindow.onafterprint = async () => {
+      printWindow.close();
+      if (printWindow.closed) {
+        try {
+          await addHistory();
+          console.log("History saved successfully");
+        } catch (error) {
+          console.error("Error saving history:", error);
+        }
+      }
+    };
+  
     printWindow.print();
-    await addHistory();
-  };
-
-  const generateBillNumber = async () => {
-    await setBillNumber(String(Math.floor(100000 + Math.random() * 900000)));
-    await handlePrint();
   };
 
   return (
@@ -261,8 +275,8 @@ const BillingSystem = ({products}) => {
       </div>
 
       <div className="print-section">
-      { cart.length===0 ? (
-        <button onClick={handlePrint} className="print-button" disabled >
+      { (name.trim()==="" || cart.length===0) ? (
+        <button className="print-button" disabled >
           Print
         </button>
       ) : (
