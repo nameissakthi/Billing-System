@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./BillingSystem.css";
 import { currency } from "../../App";
 import axios from "axios";
@@ -16,6 +16,9 @@ const BillingSystem = ({products}) => {
   const [cart, setCart] = useState([]);
   const [billNumber,setBillNumber] = useState("");
   const [name, setName] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1); 
+  const [suggestions, setSuggestions] = useState([]); 
+  const searchInputRef = useRef(null);
 
   const addHistory = async () => {
     if(billNumber){
@@ -52,10 +55,12 @@ const BillingSystem = ({products}) => {
     setSelectedProduct(null);
     setQuantity(1);
     setSearch("");
+    searchInputRef.current.focus();
   };
 
   const handleRemoveFromCart = (id) => {
     setCart(cart.filter((item) => item._id !== id));
+    searchInputRef.current.focus();
   };
 
   const calculateTotal = () => {
@@ -63,16 +68,25 @@ const BillingSystem = ({products}) => {
   };
 
   const generateBillNumber = async () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+    
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+
     const generatedBillNumber = `${Date.now()}`;
     setBillNumber(generatedBillNumber);
   
-    // Wait for state update to propagate before proceeding
-    setTimeout(() => handlePrint(generatedBillNumber), 0);
+    setTimeout(() => handlePrint(generatedBillNumber, formattedToday), 0);
   };
   
-  const handlePrint = async (generatedBillNumber) => {
+  const handlePrint = async (generatedBillNumber, today) => {
     const printWindow = window.open("", "", "width=800,height=600");
-    let printed = false; // Flag to track if printing was confirmed
+    let printed = true; 
   
     const cartItems = cart
       .map(
@@ -116,7 +130,7 @@ const BillingSystem = ({products}) => {
                 </td>
                 <td colspan="3">
                   <p style="display:flex; gap: 10px; flex-direction: column;">
-                    <span><b>Date</b>: ${new Date().toLocaleDateString()}</span>
+                    <span><b>Date</b>: ${today}</span>
                     <span><b>Time</b>: ${new Date().toLocaleTimeString()}</span>
                   </p>
                 </td>
@@ -147,7 +161,7 @@ const BillingSystem = ({products}) => {
   
     printWindow.document.close();
   
-    // Add listeners to detect when printing is complete or canceled
+
     printWindow.onbeforeunload = () => {
       if (!printed) {
         console.log("Print canceled or window closed before printing.");
@@ -169,6 +183,54 @@ const BillingSystem = ({products}) => {
     printWindow.print();
   };
 
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearch(query);
+    setActiveIndex(-1); // Reset active index when typing
+
+    if (query.trim() === "") {
+      setSuggestions([]);
+    } else {
+      const filteredProducts = products.filter((product) =>
+        product.description.toLowerCase().includes(query.toLowerCase())
+      );
+      setSuggestions(filteredProducts.slice(0, 4)); // Limit suggestions to 4
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && selectedProduct) {
+      e.preventDefault();
+      handleAddToCart();
+      setSelectedProduct(null);
+      setSearch(""); 
+      return; 
+    }
+
+    if(e.key === "Enter" && !selectedProduct){
+      searchInputRef.current.focus();
+    }
+
+    if (suggestions.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prevIndex) => (prevIndex + 1) % suggestions.length); // Cycle through suggestions
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prevIndex) =>
+        prevIndex === -1 ? suggestions.length - 1 : (prevIndex - 1 + suggestions.length) % suggestions.length
+      ); // Cycle backward
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      e.preventDefault();
+      const selected = suggestions[activeIndex];
+      setSelectedProduct(selected);
+      setSearch(selected.description);
+      setSuggestions([]); // Clear suggestions after selection
+      setActiveIndex(-1); // Reset active index
+    }
+  };
+
   return (
     <div className="billing-system">
       <header>
@@ -177,39 +239,43 @@ const BillingSystem = ({products}) => {
 
       <div className="main-container">
         <div className="name">
-          <input type="text" name="name" placeholder="Customer Name" value={name} onChange={e=>setName(e.target.value)} autoFocus required />
+          <input type="text" name="name" onKeyDown={(e)=>handleKeyDown(e)} placeholder="Customer Name" value={name} onChange={e=>setName(e.target.value)} autoFocus required />
         </div>
         <div className="centered">
           <div className="search-section">
             <input
-              type="text"
-              placeholder="Search product"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-input"
-              required
-            />
-            {search.length > 0 && !selectedProduct && (
-              <ul className="suggestion-list">
-                {products
-                  .filter((product) =>
-                    product.description.toLowerCase().includes(search.toLowerCase())
-                  )
-                  .slice(0, 4)
-                  .map((product, index) => (
-                    <li
-                      key={index}
-                      onClick={() => setSelectedProduct(product)}
-                      className="suggestion-item"
-                    >
-                      {product.description} - {currency}{fmt.format(product.sp)}
-                    </li>
-                  ))}
-              </ul>
-            )}
+            ref={searchInputRef}
+          type="text"
+          placeholder="Search product"
+          value={search}
+          onChange={handleSearchChange}
+          onKeyDown={handleKeyDown} // Handle key navigation
+          className="search-input"
+        />
+             {search.length > 0 && suggestions.length > 0 && selectedProduct==null && (
+          <ul className="suggestion-list">
+            {suggestions.map((product, index) => (
+              <li
+                key={product._id}
+                onClick={() => {
+                  setSelectedProduct(product);
+                  setSearch(product.description);
+                  setSuggestions([]);
+                  setActiveIndex(-1);
+                }}
+                className={`suggestion-item ${
+                  index === activeIndex ? "active" : ""
+                }`} // Highlight active suggestion
+              >
+                {product.description} - {currency}
+                {fmt.format(product.sp)}
+              </li>
+            ))}
+          </ul>
+        )}
 
             {selectedProduct && (
-              <div className="add-section">
+              <div className="add-section" onKeyDown={handleKeyDown}>
                 <p>
                   Selected: {selectedProduct.description} - {currency}{fmt.format(selectedProduct.sp)}
                 </p>

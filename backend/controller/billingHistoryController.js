@@ -4,6 +4,16 @@ const addBillingHistory = async (req, res) => {
     try {
         const { products, date, time, billNum, billTo } = req.body
 
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        const formattedToday = dd + '/' + mm + '/' + yyyy;
+
         let netAmt = products.map(value => value.quantity*value.sp)
         let sum = 0;
         netAmt.forEach(num => sum+=num) 
@@ -19,7 +29,7 @@ const addBillingHistory = async (req, res) => {
             billTo,
             products,
             totalAmt : sum,
-            date : date || new Date().toLocaleDateString(),
+            date : date || formattedToday,
             time : time || new Date().toLocaleTimeString(),
             savings
         }

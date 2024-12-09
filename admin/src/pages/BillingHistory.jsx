@@ -123,7 +123,7 @@ const BillingHistory = ({currency}) => {
         <span>Billing History</span>
         <div className="flex gap-2">
           <button onClick={clearHistory} className="text-base p-2 bg-red-700 text-white rounded">Clear History</button>
-          <input type="text" placeholder="mm/dd/yyyy" maxLength={10} value={date} onChange={e=>setDate(`${e.target.value}`)} className="px-3 w-36" />
+          <input type="text" placeholder="dd/mm/yyyy" maxLength={10} value={date} onChange={e=>setDate(`${e.target.value}`)} className="px-3 w-36" />
           {
             date!=""?<button onClick={handlePrint} className="text-base p-2 bg-violet-700 text-white rounded">Print</button>
             :""
@@ -153,16 +153,12 @@ const BillingHistory = ({currency}) => {
                   return (
                     <span className="py-0.5" key={index}>
                       {item.description} x {item.quantity}{" "}
-                      <span>[CP - {fmt.format(item.cp)}]</span>
-                      <span>[SP-{fmt.format(item.sp)}]</span> 
                     </span>
                   );
                 } else {
                   return (
                     <span className="py-0.5" key={index}>
-                      {item.description} {"   "} x {item.quantity}{" "}
-                      <span>[CP - {fmt.format(item.cp)}]</span>
-                      <span>[SP - {fmt.format(item.sp)}]</span>,{" "}
+                      {item.description} {"   "} x {item.quantity},{" "}
                     </span>
                   );
                 }

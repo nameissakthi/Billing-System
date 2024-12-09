@@ -44,8 +44,8 @@
   }
   
   .suggestion-list {
-    max-height: 150px;
-    overflow-y: auto;
+    max-height: 190px;
+    overflow-y: hidden;
     background: white;
     border: 2px solid #ddd;
     border-radius: 10px;
@@ -56,6 +56,11 @@
     text-align: left;
     position: absolute;
     z-index: 10;
+  }
+
+  .suggestion-item.active {
+    background-color: #f0f0f0;
+    font-weight: bold;
   }
 
   .suggestion-list::-webkit-scrollbar {
