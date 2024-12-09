@@ -86,7 +86,6 @@ const BillingSystem = ({products}) => {
   
   const handlePrint = async (generatedBillNumber, today) => {
     const printWindow = window.open("", "", "width=800,height=600");
-    let printed = true; 
   
     const cartItems = cart
       .map(
@@ -160,26 +159,21 @@ const BillingSystem = ({products}) => {
     `);
   
     printWindow.document.close();
+    
   
-
-    printWindow.onbeforeunload = () => {
-      if (!printed) {
-        console.log("Print canceled or window closed before printing.");
-      }
+    printWindow.onbeforeprint = () => {
+      console.log("Print action about to start.");
     };
   
     printWindow.onafterprint = async () => {
-      printed = true; 
-      printWindow.close();
-      if (printWindow.closed) {
-        try {
-          await addHistory();
-        } catch (error) {
-          console.error("Error saving history:", error);
-        }
+      console.log("Print action finished.");
+      try {
+        await addHistory(); // Call addHistory after the print is completed
+      } catch (error) {
+        console.error("Error saving history:", error);
       }
     };
-  
+
     printWindow.print();
   };
 

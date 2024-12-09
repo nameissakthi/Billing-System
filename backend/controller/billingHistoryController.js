@@ -14,6 +14,25 @@ const addBillingHistory = async (req, res) => {
 
         const formattedToday = dd + '/' + mm + '/' + yyyy;
 
+        function convertToIST(date) {
+            // Create a new Date object for the IST timezone
+            const istDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+            
+            // Format the date to 12-hour format with AM/PM
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            
+            const timeIn12HourFormat = istDate.toLocaleString('en-US', options);
+            
+            return timeIn12HourFormat;
+        }
+        
+        const localTime = new Date(); 
+
         let netAmt = products.map(value => value.quantity*value.sp)
         let sum = 0;
         netAmt.forEach(num => sum+=num) 
@@ -30,7 +49,7 @@ const addBillingHistory = async (req, res) => {
             products,
             totalAmt : sum,
             date : date || formattedToday,
-            time : time || new Date().toLocaleTimeString(),
+            time : time || convertToIST(localTime),
             savings
         }
 
