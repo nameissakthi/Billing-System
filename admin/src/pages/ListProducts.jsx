@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify"
 import fmt from "indian-number-format"
+import { EditableText } from "@blueprintjs/core"
 
 const ListProducts = ({ currency }) => {
   
@@ -30,7 +31,6 @@ const ListProducts = ({ currency }) => {
           id
         }
        } );
-      console.log(id);
       
       if (response.data.success) {
         toast.success(response.data.message);
@@ -44,6 +44,40 @@ const ListProducts = ({ currency }) => {
     }
   };
 
+  const changeProduct = (value, key, id) => {
+    setList(list=> {
+      return (
+        list.map(product => {
+          return product._id === id ? { ...product, [key]:value } : product;
+        })
+      )
+    })
+  }
+
+  const updateProduct = async (id) => {
+
+    const product = list.filter(product=>product._id===id)
+
+    try {
+      const response = await axios.post(backendUrl + "/api/product/update", {
+        id,
+        description : product[0].description,
+        cp: product[0].cp,
+        sp: product[0].sp
+      });
+      
+      if (response.data.success) {
+        toast.success(response.data.message);
+        await fetchList();
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
   useEffect(() => {
     fetchList();
   }, []);
@@ -54,31 +88,36 @@ const ListProducts = ({ currency }) => {
       <div className="flex flex-col gap-2">
         <div className="hidden md:grid grid-cols-[3fr_1fr_1fr_1fr] items-center px-2 py-1 border bg-gray-100 text-sm">
           <b>DESCRIPTION</b>
-          <b>COST PRICE</b>
-          <b>SELLING PRICE</b>
+          <b>COST PRICE({currency})</b>
+          <b>SELLING PRICE({currency})</b>
           <b className="text-center">ACTION</b>
         </div>
-
         {list.map((product, index) => (
           <div
             className="grid grid-cols-[3fr_1fr_1fr] md:grid-cols-[3fr_1fr_1fr_1fr] items-center gap-2 py-3 px-2 border text-sm"
             key={index}
           >
-            <p>{product.description}</p>
+              <input className="border-2 border-slate-800 p-2" type="text" value={product.description} onChange={e=>changeProduct(e.target.value, 'description', product._id)} />
             <p>
-              {currency}
-              {fmt.format(product.cp)}
-            </p>
+              <input className="border-2 border-slate-800 p-2 w-fit" type="number" value={product.cp} onChange={e=>changeProduct(e.target.value, 'cp', product._id)} />
+            </p>  
             <p>
-              {currency}
-              {fmt.format(product.sp)}
+              <input className="border-2 border-slate-800 p-2 w-fit" type="number" value={product.sp} onChange={e=>changeProduct(e.target.value, 'sp', product._id)} />
             </p>
-            <p
-              className="text-center cursor-pointer text-lg"
-              onClick={() => removeProduct(product._id)}
-            >
-              X
-            </p>
+            <div className="flex justify-evenly">
+              <p
+                className="text-center cursor-pointer border-2 rounded w-fit p-2 bg-green-500 text-white"
+                onClick={() => updateProduct(product._id)}
+              >
+                change
+              </p>
+              <p
+                className="text-center cursor-pointer border-2 rounded w-fit p-2 bg-red-500 text-white"
+                onClick={() => removeProduct(product._id)}
+              >
+                delete
+              </p>
+            </div>
           </div>
         ))}
       </div>

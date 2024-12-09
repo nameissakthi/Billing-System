@@ -6,6 +6,7 @@ import fmt from "indian-number-format"
 
 const BillingHistory = ({currency}) => {
   const [history, setHistory] = useState([]);
+  const [date, setDate] = useState("")
 
   const fetchHistory = async () => {
     try {
@@ -42,7 +43,9 @@ const BillingHistory = ({currency}) => {
   const handlePrint = async () => {
     const printWindow = window.open("", "", "width=800,height=600");
 
-    const hist = history.map((record, index) => `
+    const filterHistory = history.filter(record => record.date === date)
+
+    const hist = filterHistory.map((record, index) => `
       <tr>
         <td style="text-align: center;">${index+1}</td>
         <td style="text-align: center;">${record.billNum}</td>
@@ -85,6 +88,7 @@ const BillingHistory = ({currency}) => {
         </head>
         <body>
           <h1>History</h1>
+          <p style="font-size: 1.5rem;">Sales On ${date}</p>
           <table style="font-size: 10px;">
             <thead>
               <tr style="text-align: center; font-size: 12px;">\
@@ -119,7 +123,11 @@ const BillingHistory = ({currency}) => {
         <span>Billing History</span>
         <div className="flex gap-2">
           <button onClick={clearHistory} className="text-base p-2 bg-red-700 text-white rounded">Clear History</button>
-          <button onClick={handlePrint} className="text-base p-2 bg-violet-700 text-white rounded">Print</button>
+          <input type="text" placeholder="mm/dd/yyyy" maxLength={10} value={date} onChange={e=>setDate(`${e.target.value}`)} className="px-3 w-36" />
+          {
+            date!=""?<button onClick={handlePrint} className="text-base p-2 bg-violet-700 text-white rounded">Print</button>
+            :""
+          }
         </div>
       </p>
       <hr className="mt-4 mb-8 border-black" />
@@ -137,7 +145,7 @@ const BillingHistory = ({currency}) => {
                 </span>
                 <span className="flex flex-col">
                   <span className="mr-2 text-slate-800"><b>Date :</b> {record.date}</span>
-                  <span><b className="text-slate-800">Time :</b> {record.time}</span>
+                  <span className="text-slate-800"><b>Time :</b> {record.time}</span>
                 </span>
               </p>
               {record.products.map((item, index) => {
@@ -161,7 +169,7 @@ const BillingHistory = ({currency}) => {
               })}
               <div className="flex justify-between mt-2">
                 <span className="text-slate-950"><b>Total Amount : {currency}{fmt.format(record.totalAmt)}</b></span>
-                <span className="text-slate-950"><b>Savings : {currency}{fmt.format(record.savings)}</b></span>
+                <span className="text-slate-950"><b>Profit : {currency}{fmt.format(record.savings)}</b></span>
               </div>
             </div>
           );
