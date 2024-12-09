@@ -49,6 +49,7 @@ const BillingHistory = ({currency}) => {
       <tr>
         <td style="text-align: center;">${index+1}</td>
         <td style="text-align: center;">${record.billNum}</td>
+        <td style="text-align: center;">${record.billFrom}</td>
         <td style="text-align: center;">${record.billTo}</td>
         <td style="width: 60px;">
           <p style="display:flex; flex-direction:column;">
@@ -94,6 +95,7 @@ const BillingHistory = ({currency}) => {
               <tr style="text-align: center; font-size: 12px;">\
                 <td><b>S. No.</b></td>
                 <td><b>Bill Number</b></td>
+                <td><b>Bill From</b></td>
                 <td><b>Bill To</b></td>
                 <td><b>Date & Time</b></td>
                 <td><b>Products</b></td>
@@ -141,6 +143,7 @@ const BillingHistory = ({currency}) => {
               <p className="mb-2 p-1 border-b-2 border-slate-400 flex justify-between">
                 <span className="flex flex-col">
                   <span className="mr-2 text-slate-800"><b>Bill Number :</b> {record.billNum}</span>
+                  <span className="text-slate-800"><b>Bill From :</b> {record.billFrom}</span>
                   <span className="text-slate-800"><b>Bill To :</b> {record.billTo}</span>
                 </span>
                 <span className="flex flex-col">

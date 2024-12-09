@@ -9,6 +9,10 @@ const billingHistory = new mongoose.Schema({
         type : String,
         required : true
     },
+    billFrom : {
+        type : String,
+        required : true
+    },
     products : {
         type : Array,
         required : true

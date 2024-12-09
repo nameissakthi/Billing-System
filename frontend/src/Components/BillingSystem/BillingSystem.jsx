@@ -15,10 +15,12 @@ const BillingSystem = ({products}) => {
   const [quantity, setQuantity] = useState(1);
   const [cart, setCart] = useState([]);
   const [billNumber,setBillNumber] = useState("");
+  const [billFrom, setBillFrom] = useState("");
   const [name, setName] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1); 
   const [suggestions, setSuggestions] = useState([]); 
   const searchInputRef = useRef(null);
+  const nameInputRef = useRef(null);
 
   const addHistory = async () => {
     if(billNumber){
@@ -26,7 +28,8 @@ const BillingSystem = ({products}) => {
         const response = await axios.post(backendUrl + '/api/billinghistory/add', {
           billTo : name,
           products : cart,
-          billNum : billNumber
+          billNum : billNumber,
+          billFrom
         })
         console.log("history saved successfully")
         setName("")
@@ -225,6 +228,14 @@ const BillingSystem = ({products}) => {
     }
   };
 
+  const onPressEnter = (e) => {
+    if(billFrom){
+      if(e.key==="Enter"){
+        nameInputRef.current.focus()
+      }
+    }
+  }
+
   return (
     <div className="billing-system">
       <header>
@@ -233,7 +244,8 @@ const BillingSystem = ({products}) => {
 
       <div className="main-container">
         <div className="name">
-          <input type="text" name="name" onKeyDown={(e)=>handleKeyDown(e)} placeholder="Customer Name" value={name} onChange={e=>setName(e.target.value)} autoFocus required />
+          <input type="text" name="name" onKeyDown={(e)=>onPressEnter(e)} placeholder="Bill From" value={billFrom} onChange={e=>setBillFrom(e.target.value)} autoFocus required />
+          <input type="text" name="name" onKeyDown={(e)=>handleKeyDown(e)} placeholder="Customer Name" value={name} onChange={e=>setName(e.target.value)} required ref={nameInputRef} />
         </div>
         <div className="centered">
           <div className="search-section">
@@ -354,7 +366,7 @@ const BillingSystem = ({products}) => {
       </div>
 
       <div className="print-section">
-      { (name.trim()==="" || cart.length===0) ? (
+      { (billFrom.trim()==="" || name.trim()==="" || cart.length===0) ? (
         <button className="print-button" disabled >
           Print
         </button>

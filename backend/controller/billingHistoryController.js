@@ -2,7 +2,7 @@ import billingHistoryModel from "../models/billingHistoryModel.js";
 
 const addBillingHistory = async (req, res) => {
     try {
-        const { products, date, time, billNum, billTo } = req.body
+        const { products, date, time, billNum, billTo, billFrom } = req.body
 
         const today = new Date();
         const yyyy = today.getFullYear();
@@ -46,6 +46,7 @@ const addBillingHistory = async (req, res) => {
         const billingHistoryData = {
             billNum,
             billTo,
+            billFrom,
             products,
             totalAmt : sum,
             date : date || formattedToday,

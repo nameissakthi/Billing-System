@@ -25,7 +25,7 @@
       width: 100%;
       margin-bottom: 10px;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       input{
         width: 20%;
         border: 2px solid black;
