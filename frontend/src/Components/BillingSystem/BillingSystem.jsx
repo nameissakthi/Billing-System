@@ -117,7 +117,15 @@ const BillingSystem = ({products}) => {
           </style>
         </head>
         <body>
-          <img src=${logo} alt="LOGO" />
+             <div style="border: 2px solid black"; padding: 10; border-radius: 10;">
+          <h1>Image StampWorks</h1>
+          <p style="margin-bottom: 2px;">No:1, Dr Rajendra Prasad Rd(100feet) RD, Near GP Signal</p>
+          <p style="margin-top: 0px;">Gandhipuram, Coimbatore - 641012</p>
+          <p style="display: flex; justify-content: space-between;" }}>
+            <span>PH : 0422 438 7600</span>
+            <span>Whatsapp : 9894052888</span>
+          </p>
+        </div>
           <table>
             <thead>
               <tr>
