@@ -100,7 +100,7 @@ const BillingHistory = ({currency}) => {
                 <td><b>Date & Time</b></td>
                 <td><b>Products</b></td>
                 <td><b>Total Amount</b></td>
-                <td><b>Savings</b></td>
+                <td><b>Profit</b></td>
               </tr>
             </thead>
             <tbody>
