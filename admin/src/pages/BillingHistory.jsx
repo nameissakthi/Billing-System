@@ -3,6 +3,7 @@ import axios from "axios";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 import fmt from "indian-number-format"
+import numberToWord from "npm-number-to-word"
 
 const BillingHistory = ({currency}) => {
   const [history, setHistory] = useState([]);
@@ -44,6 +45,9 @@ const BillingHistory = ({currency}) => {
     const printWindow = window.open("", "", "width=800,height=600");
 
     const filterHistory = history.filter(record => record.date === date)
+
+    let totalAmtHist = 0
+    filterHistory.map(record=>totalAmtHist+=record.totalAmt)
 
     const hist = filterHistory.map((record, index) => `
       <tr>
@@ -106,6 +110,11 @@ const BillingHistory = ({currency}) => {
             <tbody>
               ${hist}
             </tbody>
+            <tfoot>
+              <tr>
+                <td><b>Total</b></td><td colspan="6" style="text-align: right;"><b>${numberToWord(totalAmtHist).charAt(0).toUpperCase()+numberToWord(totalAmtHist).slice(1)} rupees only</b></td><td><b>${fmt.format(totalAmtHist)}</b></td>
+              </tr>
+            </tfoot>
           </table>
         </body>
       </html>

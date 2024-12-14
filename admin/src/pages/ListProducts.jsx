@@ -78,13 +78,63 @@ const ListProducts = ({ currency }) => {
     }
   }
 
+  const handlePrint = () => {
+    const printWindow = window.open("", "", "width=800,height=600");
+
+    const products = list.map((item, index) => `
+      <tr>
+        <td style="text-align: center;">${index+1}</td>
+        <td style="text-align: center;">${item.description}</td>
+        <td style="text-align: center;">${item.cp}</td>
+        <td style="text-align: center;">${item.sp}</td>
+      </tr>
+    `)
+    .join("")
+
+    printWindow.document.write(`
+          <html>
+            <head>
+              <title>Bill</title>
+              <style>
+                body { font-family: Arial, sans-serif; }
+                table { border-collapse: collapse; width: 100%;}
+                td { border:2px solid black; padding : 5px }
+                span{ margin: 2px 0px; }
+              </style>
+            </head>
+            <body>
+              <h1>Products</h1>
+              <table style="font-size: 10px;">
+                <thead>
+                  <tr style="text-align: center; font-size: 12px;">\
+                    <td><b>S. No.</b></td>
+                    <td><b>Product Description</b></td>
+                    <td><b>Cost Price</b></td>
+                    <td><b>Selling Price</b></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${products}
+                </tbody>
+              </table>
+            </body>
+          </html>
+        `);
+    
+        printWindow.document.close();
+        printWindow.print();
+  }
+
   useEffect(() => {
     fetchList();
   }, []);
 
   return (
     <>
-      <p className="mb-2">All Products List</p>
+      <div className="flex gap-2 justify-between items-center mb-3">
+        <p className="mb-2 text-2xl">All Products List</p>
+        <button onClick={handlePrint} className="text-base py-2 px-4 bg-violet-700 text-white rounded">Print</button>
+      </div>
       <div className="flex flex-col gap-2">
         <div className="hidden md:grid grid-cols-[3fr_1fr_1fr_1fr] items-center px-2 py-1 border bg-gray-100 text-sm">
           <b>DESCRIPTION</b>
