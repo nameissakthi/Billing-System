@@ -136,7 +136,7 @@ const BillingSystem = ({products}) => {
         <body>
              <div style="border: 2px solid black; border-radius: 10;">
               <center>
-                <img src=${logo} alt="logo" style="width: 35%; margin:0px;" />
+                <img src=${logo} alt="logo" id="printableImage" style="width: 35%; margin:0px; display: block;" />
                 <p style="margin: 0px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>
                 <p style="display: flex; justify-content: space-evenly; margin: 10px 10px;" }}>
                   <span>PH : 0422 438 7600</span>
@@ -186,11 +186,14 @@ const BillingSystem = ({products}) => {
         </body>
       </html>
     `);
-  
-    printWindow.document.write(billDetails)
+
+    printWindow.document.open();
+    printWindow.document.write(billDetails);
+    const printableImage = printWindow.document.getElementById("printableImage");
     printWindow.document.close();
-    
   
+  
+
     printWindow.onbeforeprint = () => {
       console.log("Print action about to start.");
     };
@@ -204,7 +207,11 @@ const BillingSystem = ({products}) => {
       }
     };
 
-    printWindow.print();
+    printableImage.onload = () => {
+      console.log("Image Logo Loaded")
+      printWindow.print();
+      printWindow.close();
+    }
   };
 
   const handleSearchChange = (e) => {
@@ -265,7 +272,6 @@ const BillingSystem = ({products}) => {
 
   useEffect(() => {
     if (billNumber && formattedDate) {
-      console.log('New Bill Number:', billNumber);
       setTimeout(() => handlePrint(formattedDate, billNumber), 0);
     }
 }, [billNumber]);

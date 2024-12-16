@@ -189,4 +189,11 @@
   .print-button:active{
     scale: 0.95;
   }
+
+  @media print {
+    img {
+      display: block !important; /* Ensure image is visible */
+      max-width: 100%; /* Adjust width to fit the page */
+    }
+  }
   
