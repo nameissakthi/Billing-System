@@ -8,11 +8,11 @@ const Sidebar = () => {
         <div className='flex justify-center mt-2'>
             {/* <img src={logo} alt="logo" className='w-48' /> */}
             <div className='border border-black m-2'>
-                <h1 className='text-center text-2xl'><b>Image StampWorks</b></h1>
-                <p className='my-2 mx-1'>No:1, Dr Rajendra Prasad Rd{"("}100feet RD{")"}, Near GP Signal, Gandhipuram, Coimbatore - 641012</p>
+                <img src={logo} alt="logo"  />
+                <p className='mt-2 mx-1'>No:913-925, Ground floor, 100feet Road, Gandhipuram, Coimbatore - 641012</p>
                 <p className='flex flex-col m-1'>
                     <span>PH : 0422 438 7600</span>{" "}
-                    <span>Whatsapp : 9894052888</span>
+                    <span>Whatsapp : 9894166500</span>
                 </p>
             </div>
         </div>

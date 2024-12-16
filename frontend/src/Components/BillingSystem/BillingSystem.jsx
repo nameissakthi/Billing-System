@@ -100,7 +100,7 @@ const BillingSystem = ({products}) => {
     if (mm < 10) mm = '0' + mm;
     
     const formattedToday = dd + '/' + mm + '/' + yyyy;
-    setFormattedDate(formattedDate)
+    setFormattedDate(formattedToday)
     await generateBillNumber(setBillNumber)
   };
   
@@ -134,15 +134,14 @@ const BillingSystem = ({products}) => {
           </style>
         </head>
         <body>
-             <div style="border: 2px solid black"; padding: 10; border-radius: 10;">
-          <h1>Image StampWorks</h1>
-          <p style="margin-bottom: 2px;">No:1, Dr Rajendra Prasad Rd(100feet RD), Near GP Signal</p>
-          <p style="margin-top: 0px;">Gandhipuram, Coimbatore - 641012</p>
-          <p style="display: flex; justify-content: space-between;" }}>
-            <span>PH : 0422 438 7600</span>
-            <span>Whatsapp : 9894052888</span>
-          </p>
-        </div>
+             <div style="border: 2px solid black"; border-radius: 10;">
+              <img src=${logo} alt="logo" style="width: 40%" height: 100px; margin: 0px 10px; />
+              <p style="margin: 10px; margin: 0px 10px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>
+              <p style="display: flex; justify-content: space-between; margin: 10px 10px;" }}>
+                <span>PH : 0422 438 7600</span>
+                <span>Whatsapp : 9894166500</span>
+              </p>
+            </div>
           <table>
             <thead>
               <tr>
@@ -263,7 +262,7 @@ const BillingSystem = ({products}) => {
   }
 
   useEffect(() => {
-    if (billNumber) {
+    if (billNumber && formattedDate) {
       console.log('New Bill Number:', billNumber);
       setTimeout(() => handlePrint(formattedDate, billNumber), 0);
     }
@@ -273,11 +272,10 @@ const BillingSystem = ({products}) => {
     <div className="billing-system">
       <header>
         {/* <img src={logo} alt="Logo" className="logo" /> */}
-        <div style={{border: "2px solid black", padding: 10, borderRadius: 10}}>
-          <h1>Image StampWorks</h1>
-          <p style={{marginBottom: 2}}>No:1, Dr Rajendra Prasad Rd{"("}100feet RD{")"}, Near GP Signal</p>
-          <p style={{marginTop: "0px"}}>Gandhipuram, Coimbatore - 641012</p>
-          <p style={{display: "flex", justifyContent: "space-between" }}>
+        <div style={{border: "2px solid black", width:"35%",padding: "5", borderRadius: 10, display: "flex", flexDirection: "column", alignItems:"center"}}>
+          <img src={logo} alt="logo" style={{ borderRadius: 10, width: "60%"}} />
+          <p style={{marginBottom: 5, marginTop: 2}}>No:913-925, Ground floor, 100feet Road, Gandhipuram, Coimbatore - 641012</p>
+          <p style={{display: "flex", justifyContent: "space-between", alignSelf: "stretch", marginTop: 0, marginBottom: 2, marginLeft: 10, marginRight: 10}}>
             <span>PH : 0422 438 7600</span>{" "}
             <span>Whatsapp : 9894052888</span>
           </p>
