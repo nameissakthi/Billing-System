@@ -197,6 +197,12 @@ const BillingSystem = ({products}) => {
     printWindow.onbeforeprint = () => {
       console.log("Print action about to start.");
     };
+
+    printableImage.onload = () => {
+      console.log("Image Logo Loaded")
+      printWindow.print();
+      printWindow.close();
+    }
   
     printWindow.onafterprint = async () => {
       console.log("Print action finished.");
@@ -206,12 +212,6 @@ const BillingSystem = ({products}) => {
         console.error("Error saving history:", error);
       }
     };
-
-    printableImage.onload = () => {
-      console.log("Image Logo Loaded")
-      printWindow.print();
-      printWindow.close();
-    }
   };
 
   const handleSearchChange = (e) => {
