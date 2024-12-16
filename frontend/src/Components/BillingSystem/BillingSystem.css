@@ -182,7 +182,6 @@
   
   .print-button:hover {
     background-color: #0056b3;
-    scale: 1.1;
     transition-property: all;
     transition-duration: 50ms;
     transition-timing-function: ease-in-out;

@@ -134,13 +134,15 @@ const BillingSystem = ({products}) => {
           </style>
         </head>
         <body>
-             <div style="border: 2px solid black"; border-radius: 10;">
-              <img src=${logo} alt="logo" style="width: 40%" height: 100px; margin: 0px 10px; />
-              <p style="margin: 10px; margin: 0px 10px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>
-              <p style="display: flex; justify-content: space-between; margin: 10px 10px;" }}>
-                <span>PH : 0422 438 7600</span>
-                <span>Whatsapp : 9894166500</span>
-              </p>
+             <div style="border: 2px solid black; border-radius: 10;">
+              <center>
+                <img src=${logo} alt="logo" style="width: 35%; margin:0px;" />
+                <p style="margin: 0px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>
+                <p style="display: flex; justify-content: space-evenly; margin: 10px 10px;" }}>
+                  <span>PH : 0422 438 7600</span>
+                  <span>Whatsapp : 9894166500</span>
+                </p>
+              </center>
             </div>
           <table>
             <thead>
@@ -177,7 +179,7 @@ const BillingSystem = ({products}) => {
                 <td colspan="1"><b>Total</b></td><td colspan="1" style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td colspan="3" style="text-align:center;"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
               </tr>
               <tr>
-                <td colspan="2" style="padding-top:60px; text-align:center;">Customer's Signature</td><td colspan="3" style="padding-top:60px; text-align:center;">Authorized Signatory</td>
+                <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td colspan="3" style="padding-top:30px; text-align:center;">Authorized Signatory</td>
               </tr>
             </tfoot>
           </table>
@@ -277,7 +279,7 @@ const BillingSystem = ({products}) => {
           <p style={{marginBottom: 5, marginTop: 2}}>No:913-925, Ground floor, 100feet Road, Gandhipuram, Coimbatore - 641012</p>
           <p style={{display: "flex", justifyContent: "space-between", alignSelf: "stretch", marginTop: 0, marginBottom: 2, marginLeft: 10, marginRight: 10}}>
             <span>PH : 0422 438 7600</span>{" "}
-            <span>Whatsapp : 9894052888</span>
+            <span>Whatsapp : 9894166500</span>
           </p>
         </div>
       </header>
