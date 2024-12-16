@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./BillingSystem.css";
 import { currency } from "../../App";
 import axios from "axios";
@@ -19,6 +19,8 @@ const BillingSystem = ({products}) => {
   const [name, setName] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1); 
   const [suggestions, setSuggestions] = useState([]); 
+  const [formattedDate, setFormattedDate] = useState("")
+
   const searchInputRef = useRef(null);
   const nameInputRef = useRef(null);
 
@@ -33,6 +35,7 @@ const BillingSystem = ({products}) => {
         })
         console.log("history saved successfully")
         setName("")
+        setBillFrom("")
         setCart([])
       } catch (error) {
         console.log(error)
@@ -70,7 +73,24 @@ const BillingSystem = ({products}) => {
     return cart.reduce((sum, item) => sum + item.sp * item.quantity, 0);
   };
 
-  const generateBillNumber = async () => {
+  const generateBillNumber = async (setBillNumber) => {
+    try {
+      const response = await axios.get(backendUrl+'/api/billinghistory/lasthist');
+      
+      if (response.data.success) {
+          const newBillNumber = response.data.billNumber;
+          setBillNumber(newBillNumber);
+          setBillNumber(newBillNumber);
+          console.log('Generated Bill Number:', newBillNumber);
+      } else {
+          console.log('Error fetching bill number');
+      }
+    } catch (error) {
+      console.error('Error generating bill number:', error);
+    }
+  };
+
+  const handleGenerateBillNumber = async () => {
     const today = new Date();
     const yyyy = today.getFullYear();
     let mm = today.getMonth() + 1; // Months start at 0!
@@ -80,14 +100,11 @@ const BillingSystem = ({products}) => {
     if (mm < 10) mm = '0' + mm;
     
     const formattedToday = dd + '/' + mm + '/' + yyyy;
-
-    const generatedBillNumber = `${Date.now()}`;
-    setBillNumber(generatedBillNumber);
-  
-    setTimeout(() => handlePrint(generatedBillNumber, formattedToday), 0);
+    setFormattedDate(formattedDate)
+    await generateBillNumber(setBillNumber)
   };
   
-  const handlePrint = async (generatedBillNumber, today) => {
+  const handlePrint = async (today) => {
     const printWindow = window.open("", "", "width=800,height=600");
   
     const cartItems = cart
@@ -103,7 +120,7 @@ const BillingSystem = ({products}) => {
       .join("");
     const total = calculateTotal().toFixed(2);
   
-    printWindow.document.write(`
+    const billDetails = (`
       <html>
         <head>
           <title>Bill</title>
@@ -134,7 +151,7 @@ const BillingSystem = ({products}) => {
               <tr>
                 <td colspan="2">
                   <p style="display:flex; gap: 10px; flex-direction: column;">
-                    <span><b>Bill Number</b>: ${generatedBillNumber}</span>
+                    <span><b>Bill Number</b>: ${billNumber}</span>
                     <span><b>Bill To</b>: ${name}</span>
                   </p>
                 </td>
@@ -169,6 +186,7 @@ const BillingSystem = ({products}) => {
       </html>
     `);
   
+    printWindow.document.write(billDetails)
     printWindow.document.close();
     
   
@@ -179,7 +197,7 @@ const BillingSystem = ({products}) => {
     printWindow.onafterprint = async () => {
       console.log("Print action finished.");
       try {
-        await addHistory(); // Call addHistory after the print is completed
+        await addHistory();
       } catch (error) {
         console.error("Error saving history:", error);
       }
@@ -243,6 +261,13 @@ const BillingSystem = ({products}) => {
       }
     }
   }
+
+  useEffect(() => {
+    if (billNumber) {
+      console.log('New Bill Number:', billNumber);
+      setTimeout(() => handlePrint(formattedDate, billNumber), 0);
+    }
+}, [billNumber]);
 
   return (
     <div className="billing-system">
@@ -388,7 +413,7 @@ const BillingSystem = ({products}) => {
           Print
         </button>
       ) : (
-        <button onClick={generateBillNumber} className="print-button"  >
+        <button onClick={handleGenerateBillNumber} className="print-button"  >
           Print
         </button>
       )}

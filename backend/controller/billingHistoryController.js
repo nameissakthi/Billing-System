@@ -85,5 +85,27 @@ const clearBillingHistory = async (req, res) => {
     }
 }
 
+const retrieveLastProduct = async (req, res) => {
+    try {
+        const lastProduct = await billingHistoryModel.find().sort({ _id: -1 }).limit(1);
+        let newBillNumber;
 
-export { addBillingHistory, listBillingHistory, clearBillingHistory }
+        if (lastProduct.length !== 0) {
+            const lastBillNumber = lastProduct[0].billNum;
+            let billNumber = lastBillNumber.slice(4); 
+            billNumber = Number(billNumber);
+            newBillNumber = "IMSW" + (billNumber + 1); 
+        } else {
+            newBillNumber = "IMSW25000"; 
+        }
+
+        res.json({ success: true, billNumber: newBillNumber });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+}
+
+
+
+export { addBillingHistory, listBillingHistory, clearBillingHistory, retrieveLastProduct }
