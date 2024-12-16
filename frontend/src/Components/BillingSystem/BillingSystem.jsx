@@ -126,7 +126,7 @@ const BillingSystem = ({products}) => {
           <title>Bill</title>
           <style>
             body { font-family: Arial, sans-serif; }
-            table { width: 100%; border-collapse: collapse; }
+            table { width: 100%; border-collapse: collapse; font-size: 12px; }
             th, td { border: 2px solid black; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
             h2 { margin: 0px; text-align: center; }
@@ -177,7 +177,7 @@ const BillingSystem = ({products}) => {
                 <td colspan="1"><b>Total</b></td><td colspan="1" style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td colspan="3" style="text-align:center;"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
               </tr>
               <tr>
-                <td colspan="2" style="padding-top:120px; text-align:center;">Customer's Signature</td><td colspan="3" style="padding-top:120px; text-align:center;">Authorized Signatory</td>
+                <td colspan="2" style="padding-top:60px; text-align:center;">Customer's Signature</td><td colspan="3" style="padding-top:60px; text-align:center;">Authorized Signatory</td>
               </tr>
             </tfoot>
           </table>
