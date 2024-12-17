@@ -45,7 +45,7 @@
   
   .suggestion-list {
     max-height: 190px;
-    overflow-y: hidden;
+    overflow-y: scroll;
     background: white;
     border: 2px solid #ddd;
     border-radius: 10px;
@@ -58,9 +58,16 @@
     z-index: 10;
   }
 
+
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
   .suggestion-item.active {
     background-color: #f0f0f0;
     font-weight: bold;
+    color: #007bff;
   }
 
   .suggestion-list::-webkit-scrollbar {

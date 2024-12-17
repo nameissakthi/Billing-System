@@ -20,6 +20,7 @@ const BillingSystem = ({products}) => {
   const [activeIndex, setActiveIndex] = useState(-1); 
   const [suggestions, setSuggestions] = useState([]); 
   const [formattedDate, setFormattedDate] = useState("")
+  const [visibleSuggestions, setVisibleSuggestions] = useState([]);
 
   const searchInputRef = useRef(null);
   const nameInputRef = useRef(null);
@@ -217,15 +218,17 @@ const BillingSystem = ({products}) => {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearch(query);
-    setActiveIndex(-1); // Reset active index when typing
 
     if (query.trim() === "") {
       setSuggestions([]);
     } else {
       const filteredProducts = products.filter((product) =>
-        product.description.toLowerCase().includes(query.toLowerCase())
+        product.description.toLowerCase().startsWith(query.toLowerCase())
       );
-      setSuggestions(filteredProducts.slice(0, 4)); // Limit suggestions to 4
+      setSuggestions(filteredProducts); // Limit suggestions to 4
+      setActiveIndex(-1);
+
+      setVisibleSuggestions(filteredProducts.slice(0, 4));
     }
   };
 
@@ -245,20 +248,28 @@ const BillingSystem = ({products}) => {
     if (suggestions.length === 0) return;
 
     if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((prevIndex) => (prevIndex + 1) % suggestions.length); // Cycle through suggestions
+      // Move the active index down
+      const newIndex = Math.min(activeIndex + 1, suggestions.length - 1);
+      setActiveIndex(newIndex);
+
+      // Adjust the visible suggestions
+      const start = Math.max(0, newIndex - 3);
+      setVisibleSuggestions(suggestions.slice(start, start + 4));
+
     } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((prevIndex) =>
-        prevIndex === -1 ? suggestions.length - 1 : (prevIndex - 1 + suggestions.length) % suggestions.length
-      ); // Cycle backward
+      // Move the active index up
+      const newIndex = Math.max(activeIndex - 1, 0);
+      setActiveIndex(newIndex);
+
+      // Adjust the visible suggestions
+      const start = Math.max(0, newIndex - 3);
+      setVisibleSuggestions(suggestions.slice(start, start + 4));
+
     } else if (e.key === "Enter" && activeIndex >= 0) {
-      e.preventDefault();
-      const selected = suggestions[activeIndex];
-      setSelectedProduct(selected);
-      setSearch(selected.description);
-      setSuggestions([]); // Clear suggestions after selection
-      setActiveIndex(-1); // Reset active index
+      // Select the active suggestion
+      setSelectedProduct(suggestions[activeIndex]);
+      setSuggestions([]);
+      setVisibleSuggestions([]);
     }
   };
 
@@ -306,23 +317,19 @@ const BillingSystem = ({products}) => {
           onKeyDown={handleKeyDown} // Handle key navigation
           className="search-input"
         />
-             {search.length > 0 && suggestions.length > 0 && selectedProduct==null && (
+             {/* Suggestion list */}
+        {visibleSuggestions.length > 0 && (
           <ul className="suggestion-list">
-            {suggestions.map((product, index) => (
+            {visibleSuggestions.map((item, index) => (
               <li
-                key={product._id}
-                onClick={() => {
-                  setSelectedProduct(product);
-                  setSearch(product.description);
-                  setSuggestions([]);
-                  setActiveIndex(-1);
-                }}
+                key={index}
                 className={`suggestion-item ${
-                  index === activeIndex ? "active" : ""
-                }`} // Highlight active suggestion
+                  index + suggestions.indexOf(visibleSuggestions[0]) === activeIndex
+                    ? "active"
+                    : ""
+                }`}
               >
-                {product.description} - {currency}
-                {fmt.format(product.sp)}
+                {item.description} x {currency}{item.sp}
               </li>
             ))}
           </ul>

@@ -112,7 +112,7 @@ const BillingHistory = ({currency}) => {
             </tbody>
             <tfoot>
               <tr>
-                <td><b>Total</b></td><td colspan="6" style="text-align: right;"><b>${numberToWord(totalAmtHist).charAt(0).toUpperCase()+numberToWord(totalAmtHist).slice(1)} rupees only</b></td><td><b>${fmt.format(totalAmtHist)}</b></td>
+                <td><b>Total</b></td><td colspan="6" style="text-align: right;"><b>${numberToWord(totalAmtHist).charAt(0).toUpperCase()+numberToWord(totalAmtHist).slice(1)} rupees only</b></td><td><b>${currency}${fmt.format(totalAmtHist)}</b></td>
               </tr>
             </tfoot>
           </table>
