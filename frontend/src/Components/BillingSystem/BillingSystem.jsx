@@ -126,6 +126,11 @@ const BillingSystem = ({products}) => {
         <head>
           <title>Bill</title>
           <style>
+            @media print {
+            @page {
+              size: 15cm 21cm; /* Custom size: 15cm width, 21cm height */
+              margin: 0; /* Adjust margins as needed */
+            }
             body { font-family: Arial, sans-serif; }
             table { width: 100%; border-collapse: collapse; font-size: 12px; }
             th, td { border: 2px solid black; padding: 8px; text-align: left; }
