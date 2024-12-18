@@ -68,7 +68,7 @@ npm install
 
 **Install backend dependencies**
 ```bash
-cd backend
+cd Billing-System/backend
 npm install
 ```
 
@@ -81,6 +81,7 @@ npm install
 # Database connection string
 MONGODB_URI="mongodb://localhost:27017/your-database-name"
 ```
+
 **Frontend & Admin**
 - Create a `.env` file in the `frontend & Admin` directory
 - Add the following variable:
@@ -94,13 +95,12 @@ VITE_BACKEND_URL="http://localhost:4000"
 - Exclude the `.env` file from version control to protect sensitive information.
 
 **Important:**
-
 - **Separate terminals**: Run the commands in separate terminal windows or use `split terminal` to avoid conflicts.
 - **Nodemon required**: Ensure you have `nodemon` installed globally to run the backend development servers using `npm run dev`. You can install it globally using `npm install -g nodemon`.
 
 #### Start the backend server
 - Navigate to the `backend` directory: `cd backend`
-- Start the server: `npm run dev` (or npm start)
+- Start the server: `npm run server`
 - You should see a message indicating the server is running, usually on port 4000 or you can specify it in the PORT environment variable inside `.env` file.
 
 #### Start the frontend server:
