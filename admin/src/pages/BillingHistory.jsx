@@ -49,6 +49,9 @@ const BillingHistory = ({currency}) => {
     let totalAmtHist = 0
     filterHistory.map(record=>totalAmtHist+=record.totalAmt)
 
+    let totalProfit = 0
+    filterHistory.map(record=>totalProfit+=record.savings)
+
     const hist = filterHistory.map((record, index) => `
       <tr>
         <td style="text-align: center;">${index+1}</td>
@@ -113,6 +116,9 @@ const BillingHistory = ({currency}) => {
             <tfoot>
               <tr>
                 <td><b>Total</b></td><td colspan="6" style="text-align: right;"><b>${numberToWord(totalAmtHist).charAt(0).toUpperCase()+numberToWord(totalAmtHist).slice(1)} rupees only</b></td><td><b>${currency}${fmt.format(totalAmtHist)}</b></td>
+              </tr>
+              <tr>
+                <td><b>Profit</b></td><td colspan="6" style="text-align: right;"><b>${numberToWord(totalProfit).charAt(0).toUpperCase()+numberToWord(totalProfit).slice(1)} rupees only</b></td><td><b>${currency}${fmt.format(totalProfit)}</b></td>
               </tr>
             </tfoot>
           </table>

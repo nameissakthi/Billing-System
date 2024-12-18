@@ -7,7 +7,7 @@ const Sidebar = () => {
     <div className='w-[20%] min-h-screen border-r-2'>
         <div className='flex justify-center mt-2'>
             {/* <img src={logo} alt="logo" className='w-48' /> */}
-            <div className='border border-black m-2'>
+            <div className='border border-black m-2 p-2'>
                 <img src={logo} alt="logo"  />
                 <p className='mt-2 mx-1'>No:913-925, Ground floor, 100feet Road, Gandhipuram, Coimbatore - 641012</p>
                 <p className='flex flex-col m-1'>

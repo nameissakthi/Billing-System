@@ -128,26 +128,22 @@ const BillingSystem = ({products}) => {
           <style>
             @media print {
             @page {
-              size: 15cm 21cm; /* Custom size: 15cm width, 21cm height */
-              margin: 0; /* Adjust margins as needed */
+              size: A5;
+              margin: 0;
             }
             body { 
               margin: 0;
               padding: 0;
-              width: 15cm;
+              width: 14.8cm;
               height: 21cm;
               display: block;
               box-sizing: border-box;
             }
             #bill-content {
-              margin: 0; /* Align to top-left */
-              width: 15cm;
-              height: 21cm;
-              padding: 10px; /* Optional padding for layout */
+              width: 100%;
+              height: 100%;
+              padding: 10px; /* Add padding for layout adjustment */
               box-sizing: border-box;
-              font-family: Arial, sans-serif;
-              font-size: 12px;
-              line-height: 1.5;
             }
             table { width: 100%; border-collapse: collapse; font-size: 12px; }
             th, td { border: 2px solid black; padding: 8px; text-align: left; }
@@ -315,7 +311,7 @@ const BillingSystem = ({products}) => {
     <div className="billing-system">
       <header>
         {/* <img src={logo} alt="Logo" className="logo" /> */}
-        <div style={{border: "2px solid black", width:"35%",padding: "5", borderRadius: 10, display: "flex", flexDirection: "column", alignItems:"center"}}>
+        <div style={{border: "2px solid black", width:"35%",padding: 3, borderRadius: 10, display: "flex", flexDirection: "column", alignItems:"center"}}>
           <img src={logo} alt="logo" style={{ borderRadius: 10, width: "60%"}} />
           <p style={{marginBottom: 5, marginTop: 2}}>No:913-925, Ground floor, 100feet Road, Gandhipuram, Coimbatore - 641012</p>
           <p style={{display: "flex", justifyContent: "space-between", alignSelf: "stretch", marginTop: 0, marginBottom: 2, marginLeft: 10, marginRight: 10}}>
