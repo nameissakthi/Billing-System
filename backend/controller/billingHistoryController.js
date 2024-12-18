@@ -106,6 +106,16 @@ const retrieveLastProduct = async (req, res) => {
     }
 }
 
+const removeHistory = async (req, res) => {
+    try {
+        await billingHistoryModel.findByIdAndDelete(req.headers.id)
+        res.json({success : true, message : "History Removed"})
+    } catch (error) {
+        console.log(error)
+        res.json({success : false, message : error.message})
+    }
+}
 
 
-export { addBillingHistory, listBillingHistory, clearBillingHistory, retrieveLastProduct }
+
+export { addBillingHistory, listBillingHistory, clearBillingHistory, retrieveLastProduct, removeHistory }

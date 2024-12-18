@@ -131,7 +131,24 @@ const BillingSystem = ({products}) => {
               size: 15cm 21cm; /* Custom size: 15cm width, 21cm height */
               margin: 0; /* Adjust margins as needed */
             }
-            body { font-family: Arial, sans-serif; }
+            body { 
+              margin: 0;
+              padding: 0;
+              width: 15cm;
+              height: 21cm;
+              display: block;
+              box-sizing: border-box;
+            }
+            #bill-content {
+              margin: 0; /* Align to top-left */
+              width: 15cm;
+              height: 21cm;
+              padding: 10px; /* Optional padding for layout */
+              box-sizing: border-box;
+              font-family: Arial, sans-serif;
+              font-size: 12px;
+              line-height: 1.5;
+            }
             table { width: 100%; border-collapse: collapse; font-size: 12px; }
             th, td { border: 2px solid black; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
@@ -140,7 +157,8 @@ const BillingSystem = ({products}) => {
           </style>
         </head>
         <body>
-             <div style="border: 2px solid black; border-radius: 10;">
+             <div>
+              <div style="border: 2px solid black; border-radius: 10;">
               <center>
                 <img src=${logo} alt="logo" id="printableImage" style="width: 35%; margin:0px; display: block;" />
                 <p style="margin: 0px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>
@@ -189,6 +207,7 @@ const BillingSystem = ({products}) => {
               </tr>
             </tfoot>
           </table>
+             </div>
         </body>
       </html>
     `);
