@@ -116,6 +116,29 @@ const removeHistory = async (req, res) => {
     }
 }
 
+const editBillHistory = async (req, res) => {
+    try {
+        const billingHistoryData = req.body.bill
+        const { _id, billNum, billTo, billFrom, products, totalAmt, date, time, savings } = billingHistoryData
+        
+        const updatedBill = await billingHistoryModel.findByIdAndUpdate(_id, {
+            billNum,
+            billFrom,
+            billTo,
+            products,
+            totalAmt,
+            date,
+            time,
+            savings
+        })
+
+        res.json({success : true, message : "History Updated"})
+    } catch (error) {
+        console.log(error)
+        res.json({success : false, message : error.message})
+    }
+}
 
 
-export { addBillingHistory, listBillingHistory, clearBillingHistory, retrieveLastProduct, removeHistory }
+
+export { addBillingHistory, listBillingHistory, clearBillingHistory, retrieveLastProduct, removeHistory, editBillHistory }

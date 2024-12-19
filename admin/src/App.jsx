@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Analyze from "./pages/Analyze";
+import EditBill from "./pages/EditBill";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/listproducts" element={<ListProducts currency={currency} />} />
             <Route path="/addproduct" element={<AddProduct currency={currency} />} />
             <Route path="/analyze" element={<Analyze currency={currency} />} />
+            <Route path="/editbill" element={<EditBill currency={currency}/>} />
           </Routes>
         </div>
       </div>

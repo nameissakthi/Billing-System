@@ -20,6 +20,9 @@ const Sidebar = () => {
             <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/" >
                 <p className='md:block'>Billing History</p>
             </NavLink>
+            <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/editbill" >
+                <p className='md:block'>Edit Bill</p>
+            </NavLink>
             <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/analyze" >
                 <p className='md:block'>Analyze</p>
             </NavLink>
