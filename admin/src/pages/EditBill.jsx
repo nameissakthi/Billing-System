@@ -9,10 +9,8 @@ import numberToWord from "npm-number-to-word"
 const EditBill = ({currency}) => {
 
     const [billNum, setBillNum] = useState("")
-    const [list, setList] = useState([]);
     const [history, setHistory] = useState([]);
     const [bill, setBill] = useState(false)
-    const [products, setProducts] = useState([])
 
     const updateHistory = async () => {
         try {
@@ -26,21 +24,7 @@ const EditBill = ({currency}) => {
            console.log(error);
           toast.error(error.message); 
         }
-    }
-    
-      const fetchList = async () => {
-        try {
-          const response = await axios.get(backendUrl + "/api/product/list");
-          if (response.data.success) {
-            setList(response.data.products);
-          } else {
-            toast.error(response.data.message);
-          }
-        } catch (error) {
-          console.log(error);
-          toast.error(error.message);
-        }
-      };
+      }
 
       const fetchHistory = async () => {
           try {
@@ -58,7 +42,7 @@ const EditBill = ({currency}) => {
 
     const onSearchHandler = () => {
         if(billNum!=""){
-            const editBill = history.filter((hist)=>hist.billNum===billNum)
+            const editBill = history.filter((hist)=>hist.billNum===billNum.trim())
             if(editBill){
                 setBill(editBill[0])
             }else{
@@ -219,7 +203,6 @@ const EditBill = ({currency}) => {
         };
 
     useEffect(()=>{
-        fetchList();
         fetchHistory();
     }, [])
 

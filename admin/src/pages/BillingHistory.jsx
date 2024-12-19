@@ -130,17 +130,16 @@ const BillingHistory = ({currency}) => {
     printWindow.print();
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     fetchHistory();
-  }, [clearHistory]);
+  }, [])
 
   return (
     <div>
       <p className="text-xl flex justify-between">
         <span>Billing History</span>
         <div className="flex gap-2">
-          <button onClick={clearHistory} className="text-base p-2 bg-red-700 text-white rounded">Clear History</button>
-          <input type="text" placeholder="dd/mm/yyyy" maxLength={10} value={date} onChange={e=>setDate(`${e.target.value}`)} className="px-3 w-36" />
+          <input type="text" placeholder="dd/mm/yyyy" maxLength={10} value={date} onChange={e=>setDate(`${e.target.value}`)} className="px-3 w-36 border-2 border-black rounded-lg" />
           {
             date!=""?<button onClick={handlePrint} className="text-base p-2 bg-violet-700 text-white rounded">Print</button>
             :""
