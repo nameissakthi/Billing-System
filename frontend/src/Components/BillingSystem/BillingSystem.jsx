@@ -150,6 +150,8 @@ const BillingSystem = ({products}) => {
             th { background-color: #f2f2f2; }
             h2 { margin: 0px; text-align: center; }
             img { width: 200px; display: block; margin: 10px auto; }
+            tfoot{ position:fixed; bottom:0; right:0; width: 100vw; }
+            tfoot tr td { width: 20%; box-sizing: border-box; padding: 8px; }
           </style>
         </head>
         <body>
@@ -196,10 +198,10 @@ const BillingSystem = ({products}) => {
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="1"><b>Total</b></td><td colspan="1" style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td colspan="3" style="text-align:center;"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
+                <td style="text-align:center;"><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td style="text-align:center;"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
               </tr>
               <tr>
-                <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td colspan="3" style="padding-top:30px; text-align:center;">Authorized Signatory</td>
+                <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;">Authorized Signatory</td>
               </tr>
             </tfoot>
           </table>
