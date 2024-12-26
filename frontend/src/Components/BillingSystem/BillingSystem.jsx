@@ -138,6 +138,7 @@ const BillingSystem = ({products}) => {
               height: 21cm;
               display: block;
               box-sizing: border-box;
+              border: 2px solid black;
             }
             #bill-content {
               width: 100%;
@@ -146,7 +147,7 @@ const BillingSystem = ({products}) => {
               box-sizing: border-box;
             }
             table { width: 100%; border-collapse: collapse; font-size: 12px; }
-            th, td { border: 2px solid black; padding: 8px; text-align: left; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
             h2 { margin: 0px; text-align: center; }
             img { width: 200px; display: block; margin: 10px auto; }
@@ -156,7 +157,7 @@ const BillingSystem = ({products}) => {
         </head>
         <body>
              <div>
-              <div style="border: 2px solid black; border-radius: 10;">
+              <div style="border: 1px solid black; border-radius: 10;">
               <center>
                 <img src=${logo} alt="logo" id="printableImage" style="width: 35%; margin:0px; display: block;" />
                 <p style="margin: 0px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>

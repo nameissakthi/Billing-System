@@ -112,9 +112,10 @@ const EditBill = ({currency}) => {
                     margin: 0;
                     padding: 0;
                     width: 14.8cm;
-                    height: 21cm;
+                    height: 100vh;
                     display: block;
                     box-sizing: border-box;
+                    border: 2px solid black;
                   }
                   #bill-content {
                     width: 100%;
@@ -123,17 +124,17 @@ const EditBill = ({currency}) => {
                     box-sizing: border-box;
                   }
                   table { width: 100%; border-collapse: collapse; font-size: 12px; }
-                  th, td { border: 2px solid black; padding: 8px; text-align: left; }
+                  th, td { border: 1px solid black; padding: 8px; text-align: left; }
                   th { background-color: #f2f2f2; }
                   h2 { margin: 0px; text-align: center; }
                   img { width: 200px; display: block; margin: 10px auto; }
-                  tfoot{ position:fixed; bottom:0; right:0; width: 100vw; }
+                  tfoot{ position:fixed; bottom:0; left:0; width: 14.8cm; }
                   tfoot tr td { width: 20%; box-sizing: border-box; padding: 8px; }
                 </style>
               </head>
               <body>
                    <div>
-                    <div style="border: 2px solid black; border-radius: 10;">
+                    <div style="border: 1px solid black; border-radius: 10;">
                     <center>
                       <img src=${logo} alt="logo" id="printableImage" style="width: 35%; margin:0px; display: block;" />
                       <p style="margin: 0px;">No:913-925, Ground floor, 100feet road, Gandhipuram, Coimbatore - 641012</p>
