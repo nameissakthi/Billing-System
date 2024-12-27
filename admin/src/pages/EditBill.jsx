@@ -112,10 +112,11 @@ const EditBill = ({currency}) => {
                     margin: 0;
                     padding: 0;
                     width: 14.8cm;
-                    height: 100vh;
+                    height: 21cm;
                     display: block;
                     box-sizing: border-box;
                     border: 2px solid black;
+                    padding: 20px;
                   }
                   #bill-content {
                     width: 100%;
@@ -123,13 +124,11 @@ const EditBill = ({currency}) => {
                     padding: 10px; /* Add padding for layout adjustment */
                     box-sizing: border-box;
                   }
-                  table { width: 100%; border-collapse: collapse; font-size: 12px; }
-                  th, td { border: 1px solid black; padding: 8px; text-align: left; }
+                  table { width: 100%; border-collapse: collapse; font-size: 12px; height:80%;}
+                  th, td { border: 1px solid black; padding: 8px; text-align: left; vertical-align: top; }
                   th { background-color: #f2f2f2; }
                   h2 { margin: 0px; text-align: center; }
                   img { width: 200px; display: block; margin: 10px auto; }
-                  tfoot{ position:fixed; bottom:0; left:0; width: 14.8cm; }
-                  tfoot tr td { width: 20%; box-sizing: border-box; padding: 8px; }
                 </style>
               </head>
               <body>
@@ -171,17 +170,19 @@ const EditBill = ({currency}) => {
                       <th style="text-align:center;">Total</th>
                     </tr>
                   </thead>
+                  <div style="display:flex; flex-direction:column; justify-content:space-between;">
                   <tbody>
                     ${products}
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(bill.totalAmt)}</b></td><td style="text-align:center;"><b>${numberToWord(bill.totalAmt).charAt(0).toUpperCase()+numberToWord(bill.totalAmt).slice(1)} rupees only</b></td>
+                      <td><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(bill.totalAmt)}</b></td><td style="text-align:center;" colspan="3"><b>${numberToWord(bill.totalAmt).charAt(0).toUpperCase()+numberToWord(bill.totalAmt).slice(1)} rupees only</b></td>
                     </tr>
                     <tr>
-                      <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;">Authorized Signatory</td>
+                      <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;" colspan="3">Authorized Signatory</td>
                     </tr>
                   </tfoot>
+                  </div>
                 </table>
                    </div>
               </body>

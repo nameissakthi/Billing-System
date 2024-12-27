@@ -139,20 +139,19 @@ const BillingSystem = ({products}) => {
               display: block;
               box-sizing: border-box;
               border: 2px solid black;
+              padding: 20px;
             }
             #bill-content {
               width: 100%;
               height: 100%;
-              padding: 10px; /* Add padding for layout adjustment */
+              padding: 10px;
               box-sizing: border-box;
             }
-            table { width: 100%; border-collapse: collapse; font-size: 12px; }
-            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            table { width: 100%; border-collapse: collapse; font-size: 12px; height:80%;}
+            th, td { border: 1px solid black; padding: 8px; text-align: left; vertical-align: top; }
             th { background-color: #f2f2f2; }
             h2 { margin: 0px; text-align: center; }
             img { width: 200px; display: block; margin: 10px auto; }
-            tfoot{ position:fixed; bottom:0; right:0; width: 100vw; }
-            tfoot tr td { width: 20%; box-sizing: border-box; padding: 8px; }
           </style>
         </head>
         <body>
@@ -194,17 +193,19 @@ const BillingSystem = ({products}) => {
                 <th style="text-align:center;">Total</th>
               </tr>
             </thead>
-            <tbody>
+            <div style="display:flex; flex-direction:column; justify-content:space-between;">
+              <tbody>
               ${cartItems}
-            </tbody>
+              </tbody>
             <tfoot>
               <tr>
-                <td style="text-align:center;"><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td style="text-align:center;"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
+                <td style="text-align:center;"><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td style="text-align:center;" colspan="3"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
               </tr>
               <tr>
-                <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;">Authorized Signatory</td>
+                <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;" colspan="3">Authorized Signatory</td>
               </tr>
             </tfoot>
+            </div>
           </table>
              </div>
         </body>
