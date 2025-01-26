@@ -199,7 +199,7 @@ const BillingSystem = ({products}) => {
               </tbody>
             <tfoot>
               <tr>
-                <td style="text-align:center;"><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(total)}</b></td><td style="text-align:center;" colspan="3"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td>
+                <td style="text-align:center;"><b>Total</b></td><td style="text-align:center;"><b>${numberToWord(total).charAt(0).toUpperCase()+numberToWord(total).slice(1)} rupees only</b></td><td style="text-align:center;" colspan="3"><b>${currency}${fmt.format(total)}</b></td>
               </tr>
               <tr>
                 <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;" colspan="3">Authorized Signatory</td>

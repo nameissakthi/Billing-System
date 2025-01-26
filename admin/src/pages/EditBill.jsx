@@ -176,7 +176,7 @@ const EditBill = ({currency}) => {
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td><b>Total</b></td><td style="text-align:center;"><b>${currency}${fmt.format(bill.totalAmt)}</b></td><td style="text-align:center;" colspan="3"><b>${numberToWord(bill.totalAmt).charAt(0).toUpperCase()+numberToWord(bill.totalAmt).slice(1)} rupees only</b></td>
+                      <td><b>Total</b></td><td style="text-align:center;"><b>${numberToWord(bill.totalAmt).charAt(0).toUpperCase()+numberToWord(bill.totalAmt).slice(1)} rupees only</b></td><td style="text-align:center;" colspan="3"><b>${currency}${fmt.format(bill.totalAmt)}</b></td>
                     </tr>
                     <tr>
                       <td colspan="2" style="padding-top:30px; text-align:center;">Customer's Signature</td><td style="padding-top:30px; padding-left: 60px; padding-right:60px; text-align:center;" colspan="3">Authorized Signatory</td>
